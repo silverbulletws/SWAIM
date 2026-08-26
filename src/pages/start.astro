@@ -1,0 +1,486 @@
+---
+// src/pages/start.astro
+// Swaim Engineering and Surveying — project intake
+
+const phone = "940-872-5075";
+const phoneHref = "tel:+19408725075";
+const email = "info@swaimengineering.com";
+const emailHref = "mailto:info@swaimengineering.com";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Start a project — Swaim Engineering and Surveying</title>
+    <meta name="description" content="Tell Swaim Engineering and Surveying about your project. Boundary surveys, platting, site development, and drainage in Bowie and North Texas." />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Narrow:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="start-page">
+    <header class="start-header">
+      <a class="brand" href="/">
+        <img src="/assets/swaim-logo-inverted.webp" alt="Swaim Engineering and Surveying" />
+      </a>
+      <a class="back-link mono" href="/">&larr; Back to home</a>
+    </header>
+
+    <main class="start-main">
+      <div class="start-intro">
+        <p class="label">Step 2 of 2</p>
+        <h1>A few details and we'll get back to you</h1>
+        <p class="start-sub">
+          Nothing here is required except how to reach you. Fill in what you know, leave the rest
+          blank, and we'll sort it out on the phone.
+        </p>
+      </div>
+
+      <form class="start-form" id="start-form" novalidate>
+        <!-- PROJECT -->
+        <fieldset>
+          <legend class="label">The project</legend>
+
+          <div class="field">
+            <label for="project">Project name</label>
+            <input type="text" id="project" name="project" placeholder="Your Project Name" />
+          </div>
+
+          <div class="field">
+            <label for="ptype">What do you need?</label>
+            <select id="ptype" name="ptype">
+              <option value="">Not sure yet — help me figure it out</option>
+              <optgroup label="Surveying">
+                <option>Boundary survey</option>
+                <option>Oil and gas survey</option>
+                <option>Platting / subdivision</option>
+                <option>Construction staking</option>
+                <option>Right-of-way determination</option>
+                <option>Topographic mapping</option>
+              </optgroup>
+              <optgroup label="Engineering">
+                <option>Site development</option>
+                <option>Roadway design</option>
+                <option>Water or sewer design</option>
+                <option>Drainage study or design</option>
+                <option>Feasibility study</option>
+                <option>Construction management</option>
+              </optgroup>
+              <option>Something else</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="county">County</label>
+              <input type="text" id="county" name="county" placeholder="Montague" />
+            </div>
+            <div class="field">
+              <label for="acreage">Approximate acreage</label>
+              <input type="text" id="acreage" name="acreage" placeholder="12.5" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="address">Property address or location</label>
+            <input type="text" id="address" name="address" placeholder="Street, or nearest crossroads" />
+          </div>
+
+          <div class="field-row three">
+            <div class="field">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" />
+            </div>
+            <div class="field">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" value="TX" />
+            </div>
+            <div class="field">
+              <label for="zip">ZIP</label>
+              <input type="text" id="zip" name="zip" inputmode="numeric" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="becoming">What's the land going to become?</label>
+            <input type="text" id="becoming" name="becoming" placeholder="Subdivision, storage facility, well pad, splitting a family tract..." />
+          </div>
+
+          <div class="field">
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline">
+              <option value="">No firm deadline</option>
+              <option>Yesterday — it's holding something up</option>
+              <option>Within 30 days</option>
+              <option>1 to 3 months</option>
+              <option>3 to 6 months</option>
+              <option>Just planning ahead</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="records">Existing records</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="records" value="deed" /> <span>I have a deed</span></label>
+              <label class="check"><input type="checkbox" name="records" value="plat" /> <span>I have an existing plat or survey</span></label>
+              <label class="check"><input type="checkbox" name="records" value="title" /> <span>I have a title commitment</span></label>
+              <label class="check"><input type="checkbox" name="records" value="none" /> <span>None of the above</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- CONTACT -->
+        <fieldset>
+          <legend class="label">How to reach you</legend>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Your name <span class="req">required</span></label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="field">
+              <label for="company">Company or municipality</label>
+              <input type="text" id="company" name="company" placeholder="Optional" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="phone">Phone <span class="req">required</span></label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+            <div class="field">
+              <label for="emailfield">Email</label>
+              <input type="email" id="emailfield" name="email" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="role">You are the&hellip;</label>
+            <select id="role" name="role">
+              <option value="">Select one</option>
+              <option>Property owner</option>
+              <option>Developer or builder</option>
+              <option>City or county staff</option>
+              <option>Architect or engineer</option>
+              <option>Realtor or title company</option>
+              <option>Attorney</option>
+              <option>Oil and gas operator</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="best">Best time to call</label>
+            <select id="best" name="best">
+              <option value="">Anytime during business hours</option>
+              <option>Mornings</option>
+              <option>Afternoons</option>
+              <option>Email me instead</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- DETAIL -->
+        <fieldset>
+          <legend class="label">Anything else</legend>
+
+          <div class="field">
+            <label for="notes">Tell us about it</label>
+            <textarea id="notes" name="notes" rows="5" placeholder="Fence line dispute with the neighbor, city wants a drainage study before they'll approve the plat, need it sealed for closing — whatever the situation is."></textarea>
+          </div>
+
+          <div class="field">
+            <label for="files">Attachments</label>
+            <input type="file" id="files" name="files" multiple />
+            <p class="field-hint">Deeds, plats, title work, sketches. PDF, image, or CAD.</p>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="btn-primary" type="submit">Send it over</button>
+          <p class="actions-note">
+            Or skip all this and call <a href={phoneHref}>{phone}</a>.
+          </p>
+        </div>
+      </form>
+
+      <div class="start-done" id="start-done" hidden>
+        <p class="label">Received</p>
+        <h2>Got it — we'll be in touch.</h2>
+        <p>
+          Somebody from the office will call within one business day. If it's urgent, don't wait on
+          us: <a href={phoneHref}>{phone}</a>.
+        </p>
+        <a class="btn-ghost-dark" href="/">Back to home</a>
+      </div>
+    </main>
+
+    <footer class="start-footer">
+      <p class="mono">Swaim Engineering and Surveying &nbsp;·&nbsp; 506 North Mason, Bowie, TX 76230</p>
+      <p class="mono">
+        <a href={phoneHref}>{phone}</a> &nbsp;·&nbsp; <a href={emailHref}>{email}</a>
+      </p>
+    </footer>
+
+    <style is:global>
+      :root {
+        --ink: #0e1f2a;
+        --ink-2: #16303f;
+        --buff: #e7dfd0;
+        --buff-2: #f3eee4;
+        --blue: #4a8ba8;
+        --flag: #e2571e;
+        --hair: rgba(231, 223, 208, 0.22);
+
+        --display: "Archivo Narrow", "Archivo", system-ui, sans-serif;
+        --body: "Archivo", system-ui, -apple-system, sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+        --pad: clamp(1.25rem, 9vw, 10rem);
+      }
+
+      * { box-sizing: border-box; }
+
+      body.start-page {
+        margin: 0;
+        background: var(--buff-2);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 17px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a { color: inherit; }
+      :focus-visible { outline: 2px solid var(--flag); outline-offset: 3px; }
+
+      .mono {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .label {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--blue);
+        margin: 0 0 1rem;
+      }
+      .label::before {
+        content: "";
+        width: 42px;
+        height: 2px;
+        background: currentColor;
+        flex: none;
+      }
+
+      /* ---------- header ---------- */
+      .start-header {
+        background: var(--ink);
+        color: var(--buff);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 1.25rem var(--pad);
+      }
+      .brand img { height: 55px; width: auto; display: block; }
+      .back-link { text-decoration: none; opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
+      .back-link:hover { opacity: 1; color: var(--flag); }
+
+      /* ---------- main ---------- */
+      .start-main { padding: clamp(3rem, 8vw, 5.5rem) var(--pad) clamp(4rem, 9vw, 7rem); }
+      .start-intro { max-width: 40rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+      .start-intro h1 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(2rem, 4.6vw, 3.1rem);
+        line-height: 1.05;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      .start-sub { margin: 1.25rem 0 0; opacity: 0.75; max-width: 34rem; }
+
+      /* ---------- form ---------- */
+      .start-form { max-width: 46rem; }
+      fieldset {
+        border: 0;
+        border-top: 1px solid rgba(14, 31, 42, 0.16);
+        margin: 0 0 2.75rem;
+        padding: 2rem 0 0;
+      }
+      legend { padding: 0; }
+
+      .field { display: grid; gap: 0.45rem; margin-bottom: 1.4rem; }
+      .field label {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.7;
+      }
+      .req {
+        color: var(--flag);
+        opacity: 1;
+        letter-spacing: 0.1em;
+        margin-left: 0.4rem;
+      }
+
+      .field input[type="text"],
+      .field input[type="tel"],
+      .field input[type="email"],
+      .field select,
+      .field textarea {
+        font-family: var(--body);
+        font-size: 1rem;
+        color: var(--ink);
+        background: #fff;
+        border: 1px solid rgba(14, 31, 42, 0.25);
+        padding: 0.85rem 1rem;
+        width: 100%;
+        border-radius: 0;
+        appearance: none;
+      }
+      .field textarea { resize: vertical; line-height: 1.55; }
+      .field select { cursor: pointer; background-image: none; }
+      .field ::placeholder { opacity: 0.38; }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        outline: 2px solid var(--flag);
+        outline-offset: 0;
+        border-color: transparent;
+      }
+      .field input[type="file"] {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        padding: 0.75rem 0;
+      }
+      .field-hint { margin: 0.4rem 0 0; font-size: 0.84rem; opacity: 0.55; }
+
+      .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+      .field-row.three { grid-template-columns: 2fr 0.7fr 1fr; }
+      @media (max-width: 620px) {
+        .field-row,
+        .field-row.three { grid-template-columns: 1fr; }
+      }
+
+      .checks { display: grid; gap: 0.6rem; margin-top: 0.2rem; }
+      .check {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        cursor: pointer;
+        font-family: var(--body) !important;
+        font-size: 0.95rem !important;
+        letter-spacing: normal !important;
+        text-transform: none !important;
+        opacity: 0.85 !important;
+      }
+      .check input { width: 17px; height: 17px; accent-color: var(--flag); flex: none; }
+
+      /* ---------- actions ---------- */
+      .form-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+      .btn-primary {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 2.2rem;
+        background: var(--flag);
+        color: #fff;
+        border: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover { background: #c94815; }
+      .actions-note { margin: 0; font-size: 0.9rem; opacity: 0.6; }
+      .actions-note a { color: var(--flag); text-decoration: none; }
+      .actions-note a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+      /* ---------- done ---------- */
+      .start-done { max-width: 40rem; }
+      .start-done[hidden] { display: none; }
+      .start-done h2 {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(1.9rem, 4.2vw, 2.8rem);
+        line-height: 1.05;
+        text-transform: uppercase;
+        margin: 0 0 1.25rem;
+      }
+      .start-done p { opacity: 0.78; }
+      .start-done a { color: var(--flag); }
+      .btn-ghost-dark {
+        display: inline-block;
+        margin-top: 1.5rem;
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.95rem 1.6rem;
+        border: 1px solid rgba(14, 31, 42, 0.3);
+        color: var(--ink) !important;
+      }
+      .btn-ghost-dark:hover { border-color: var(--flag); color: var(--flag) !important; }
+
+      /* ---------- footer ---------- */
+      .start-footer {
+        background: var(--ink);
+        color: var(--buff);
+        padding: 2rem var(--pad);
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .start-footer p { margin: 0; opacity: 0.6; }
+      .start-footer a { text-decoration: none; }
+      .start-footer a:hover { color: var(--flag); }
+    </style>
+
+    <script>
+      // Prefill the project name passed from the homepage starter field.
+      const params = new URLSearchParams(window.location.search);
+      const passed = params.get("project");
+      if (passed) {
+        const projectField = document.getElementById("project");
+        if (projectField) projectField.value = passed;
+      }
+
+      // DEMO ONLY — no backend yet. Shows the confirmation state.
+      const form = document.getElementById("start-form");
+      const done = document.getElementById("start-done");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name");
+        const phoneField = document.getElementById("phone");
+
+        if (!name.value.trim()) { name.focus(); return; }
+        if (!phoneField.value.trim()) { phoneField.focus(); return; }
+
+        form.hidden = true;
+        document.querySelector(".start-intro").hidden = true;
+        done.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+  </body>
+</html>
