@@ -75,7 +75,7 @@ const counties = [
         <p class="label">Since April 2003</p>
         <h1>A Bowie firm, run by the man who signs the drawings</h1>
         <p class="co-lede">
-          Jason Swaim opened the office on North Mason in April of 2003 after ten years with Halff
+          <strong>Jason G. Swaim</strong> opened the office on North Mason in April of 2003 after ten years with Halff
           Associates. He holds both a Professional Engineer license and a Registered Professional
           Land Surveyor license in Texas &mdash; the same two seals you see at the bottom of our
           drawings, and the reason a project doesn't have to be handed between two firms.
@@ -89,9 +89,11 @@ const counties = [
     <!-- ============ MISSION ============ -->
     <section class="co-mission">
       <blockquote>
-        Engineering and surveying services of exceptional value to our clients and the North Texas
-        community, while enhancing our environment through dedication, expertise, experience,
-        ethics, and technology.
+        <span class="mission-label mono">Our mission, since 2003</span>
+        Our mission is to provide engineering and surveying services
+        of exceptional value to our clients and the North Texas
+        community, while enhancing our environment through dedication,
+        expertise, experience, ethics, and technology.
       </blockquote>
     </section>
 
@@ -426,7 +428,13 @@ const counties = [
         padding-left: clamp(1.25rem, 3vw, 2rem);
         opacity: 0.85;
       }
-
+      .mission-label {
+        display: block;
+        color: var(--blue);
+        margin-bottom: 1rem;
+        font-style: normal;
+      }
+      
       /* ---------- records ---------- */
       .co-records {
         background: var(--ink);
