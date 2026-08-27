@@ -1,0 +1,88 @@
+---
+// src/pages/accessibility.astro
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site.js";
+---
+
+<Base
+  title="Accessibility Statement — Swaim Engineering and Surveying"
+  description="Swaim Engineering and Surveying is committed to keeping this website usable by the broadest possible audience, following WCAG 2.1 Level AA."
+>
+  <section class="doc">
+    <p class="label">ADA Accessibility Statement</p>
+    <h1>Committed to an inclusive digital experience</h1>
+    <p class="doc-lede">
+      Accessibility is a priority, not an option.
+    </p>
+
+    <div class="doc-body">
+      <p>
+        We believe the internet should be accessible to everyone, regardless of ability or
+        circumstance. Our team is committed to ensuring this website can be used by the broadest
+        possible audience.
+      </p>
+      <p>
+        To support this commitment, we strive to follow the Web Content Accessibility Guidelines
+        (WCAG) 2.1, Level AA. These internationally recognized guidelines outline best practices
+        for making digital content more accessible to individuals with a wide range of
+        disabilities.
+      </p>
+      <p>
+        We perform regular scans and assessments of our website to help ensure ongoing compliance
+        with WCAG 2.1 standards.
+      </p>
+      <p>
+        Our goal is to support a broad range of browsers and assistive technologies, allowing
+        users to access the site using the tools that work best for them. We aim to minimize any
+        barriers to access.
+      </p>
+      <p>
+        While we work diligently to maintain and improve accessibility, some areas of the site may
+        not yet be fully optimized. Enhancing accessibility is an ongoing process, and we are
+        actively working toward full compliance.
+      </p>
+
+      <h2>Tell us if something isn't working</h2>
+      <p>
+        If you encounter any accessibility issue or have a suggestion for improvement, we welcome
+        your feedback. Email us at <a href={site.emailHref}>{site.email}</a> or call the office at 
+        <a href={site.phoneHref}> {site.phone}</a>, and we'll work with you to get you the
+        information you need.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .doc {
+    max-width: calc(46rem + var(--pad) * 2);
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 5.5rem) var(--pad) clamp(4rem, 9vw, 6.5rem);
+  }
+  .doc h1 {
+    font-size: clamp(2rem, 4.6vw, 3rem);
+    text-transform: uppercase;
+  }
+  .doc-lede {
+    margin: 1.25rem 0 0;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    line-height: 1.35;
+    opacity: 0.85;
+  }
+  .doc-body {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--hair-ink);
+    padding-top: clamp(2rem, 4vw, 2.75rem);
+  }
+  .doc-body p { margin: 0 0 1.35rem; opacity: 0.82; }
+  .doc-body p:last-child { margin-bottom: 0; }
+  .doc-body h2 {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    margin: 2.5rem 0 1rem;
+  }
+  .doc-body a { color: var(--flag); text-decoration: none; }
+  .doc-body a:hover { text-decoration: underline; text-underline-offset: 4px; }
+</style>

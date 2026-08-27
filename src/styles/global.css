@@ -321,6 +321,13 @@ a { color: inherit; }
 .tb-seals { display: flex; flex-direction: row-reverse; gap: 0.6rem; }
 .tb-seals .seal-btn img { width: var(--footer-seal); }
 
+.tb-bar-link {
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.tb-bar-link:hover { color: var(--flag); }
+.tb-sep { opacity: 0.5; }
+
 .tb-bar {
   grid-column: 1 / -1;
   border-top: 1px solid var(--hair);
