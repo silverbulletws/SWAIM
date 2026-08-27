@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Intake form and unfinished project pages are noindex; keeping them
+# out of the crawl too saves everyone the round trip.
+Disallow: /start
+Disallow: /projects/kingdom-ridge
+
+Sitemap: https://swaimengineering.com/sitemap-index.xml

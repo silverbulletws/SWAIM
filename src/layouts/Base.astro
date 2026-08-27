@@ -1,0 +1,81 @@
+---
+// src/layouts/Base.astro
+// The shell every page sits inside. Pages pass a title and description
+// and then contain nothing but their own content.
+//
+//   theme       "light" (default) | "dark"      — page background
+//   header      "solid" (default) | "overlay" | "minimal" | "none"
+//   footer      "titleblock" (default) | "slim" | "none"
+//   lightbox    force the seal lightbox on (the title-block footer
+//               already brings it in automatically)
+//   noindex     true to keep the page out of search results
+
+import "../styles/global.css";
+import { site } from "../data/site.js";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Lightbox from "../components/Lightbox.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  theme?: "light" | "dark";
+  header?: "solid" | "overlay" | "minimal" | "none";
+  footer?: "titleblock" | "slim" | "none";
+  lightbox?: boolean;
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = "Licensed civil engineering and land surveying under one roof in Bowie, Texas.",
+  theme = "light",
+  header = "solid",
+  footer = "titleblock",
+  lightbox = false,
+  noindex = false,
+  bodyClass = "",
+} = Astro.props;
+
+const fonts =
+  "https://fonts.googleapis.com/css2" +
+  "?family=Archivo:wght@500;600;700" +
+  "&family=Archivo+Narrow:wght@600;700" +
+  "&family=IBM+Plex+Mono:wght@400;500" +
+  "&family=Source+Serif+4:ital,opsz,wght@1,8..60,400" +
+  "&display=swap";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0e1f2a" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={fonts} rel="stylesheet" />
+  </head>
+
+  <body class:list={[theme === "dark" && "theme-dark", bodyClass]}>
+    {header !== "none" && <Header variant={header} />}
+
+    <slot />
+
+    {footer !== "none" && <Footer variant={footer === "slim" ? "slim" : "titleblock"} />}
+
+    {/* The title-block footer carries clickable seals, so the lightbox
+        ships with it automatically. Pages can also force it on. */}
+    {(lightbox || footer === "titleblock") && <Lightbox />}
+  </body>
+</html>

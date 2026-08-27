@@ -1,0 +1,35 @@
+---
+// src/components/Header.astro
+// variant "solid"   — dark bar at the top of the page (default)
+// variant "overlay" — transparent, floats over the homepage hero
+// variant "minimal" — logo + back link only, used on /start
+import { site } from "../data/site.js";
+import Icon from "./Icon.astro";
+
+interface Props { variant?: "solid" | "overlay" | "minimal"; }
+const { variant = "solid" } = Astro.props;
+---
+
+<header class:list={["site-header", variant === "overlay" && "is-overlay"]}>
+  <a class="brand" href="/">
+    <img src="/assets/swaim-logo-inverted.webp" alt={site.name} />
+  </a>
+
+  {variant === "minimal" ? (
+    <a class="back-link mono" href="/">&larr; Back to home</a>
+  ) : (
+    <nav class="nav">
+      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a class="nav-phone" href={site.phoneHref}>{site.phone}</a>
+      <a
+        class="nav-social"
+        href={site.facebookHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${site.name} on Facebook`}
+      >
+        <Icon name="facebook" />
+      </a>
+    </nav>
+  )}
+</header>

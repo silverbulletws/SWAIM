@@ -1,0 +1,17 @@
+---
+// src/components/Seal.astro
+// A clickable seal that opens the lightbox. Size comes from the
+// parent context in CSS, not from here.
+import { seals } from "../data/site.js";
+interface Props { which: "pe" | "rpls"; }
+const { which } = Astro.props;
+const seal = seals[which];
+---
+<button
+  class="seal-btn"
+  type="button"
+  data-seal={seal.src}
+  data-caption={seal.caption}
+>
+  <img src={seal.src} alt={`${seal.alt} — click to enlarge`} />
+</button>

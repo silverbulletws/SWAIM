@@ -1,0 +1,50 @@
+---
+// src/components/Lightbox.astro
+// Markup + behaviour for the seal lightbox. Styles live in global.css.
+// Wires itself to every .seal-btn on the page automatically.
+---
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
+  <figure>
+    <img id="lightbox-img" src="" alt="" />
+    <figcaption id="lightbox-cap" class="mono"></figcaption>
+  </figure>
+</div>
+
+<script>
+  const box = document.getElementById("lightbox");
+  if (box) {
+    const boxImg = document.getElementById("lightbox-img");
+    const boxCap = document.getElementById("lightbox-cap");
+    let lastFocus = null;
+
+    const openBox = (src, caption, trigger) => {
+      lastFocus = trigger;
+      boxImg.src = src;
+      boxImg.alt = caption;
+      boxCap.textContent = caption;
+      box.hidden = false;
+      document.body.style.overflow = "hidden";
+      box.querySelector(".lightbox-close").focus();
+    };
+
+    const closeBox = () => {
+      box.hidden = true;
+      boxImg.src = "";
+      document.body.style.overflow = "";
+      if (lastFocus) lastFocus.focus();
+    };
+
+    document.querySelectorAll(".seal-btn").forEach((btn) => {
+      btn.addEventListener("click", () =>
+        openBox(btn.dataset.seal, btn.dataset.caption, btn)
+      );
+    });
+
+    box.querySelector(".lightbox-close").addEventListener("click", closeBox);
+    box.addEventListener("click", (e) => { if (e.target === box) closeBox(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !box.hidden) closeBox();
+    });
+  }
+</script>

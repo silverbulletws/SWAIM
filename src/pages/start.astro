@@ -1,38 +1,17 @@
 ---
 // src/pages/start.astro
-// Swaim Engineering and Surveying — project intake
-
-const phone = "940-872-5075";
-const phoneHref = "tel:+19408725075";
-const email = "info@swaimengineering.com";
-const emailHref = "mailto:info@swaimengineering.com";
+import Base from "../layouts/Base.astro";
+import { site } from "../data/site.js";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Start a project — Swaim Engineering and Surveying</title>
-    <meta name="description" content="Tell Swaim Engineering and Surveying about your project. Boundary surveys, platting, site development, and drainage in Bowie and North Texas." />
-    <meta name="robots" content="noindex" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Narrow:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-
-  <body class="start-page">
-    <header class="start-header">
-      <a class="brand" href="/">
-        <img src="/assets/swaim-logo-inverted.webp" alt="Swaim Engineering and Surveying" />
-      </a>
-      <a class="back-link mono" href="/">&larr; Back to home</a>
-    </header>
-
-    <main class="start-main">
+<Base
+  title="Start a project — Swaim Engineering and Surveying"
+  description="Tell Swaim Engineering and Surveying about your project. Boundary surveys, platting, site development, and drainage in Bowie and North Texas."
+  header="minimal"
+  footer="slim"
+  noindex={true}
+>
+  <main class="start-main">
       <div class="start-intro">
         <p class="label">Step 2 of 2</p>
         <h1>A few details and we'll get back to you</h1>
@@ -206,7 +185,7 @@ const emailHref = "mailto:info@swaimengineering.com";
         <div class="form-actions">
           <button class="btn-primary" type="submit">Send it over</button>
           <p class="actions-note">
-            Or skip all this and call <a href={phoneHref}>{phone}</a>.
+            Or skip all this and call <a href={site.phoneHref}>{site.phone}</a>.
           </p>
         </div>
       </form>
@@ -216,271 +195,148 @@ const emailHref = "mailto:info@swaimengineering.com";
         <h2>Got it — we'll be in touch.</h2>
         <p>
           Somebody from the office will call within one business day. If it's urgent, don't wait on
-          us: <a href={phoneHref}>{phone}</a>.
+          us: <a href={site.phoneHref}>{site.phone}</a>.
         </p>
         <a class="btn-ghost-dark" href="/">Back to home</a>
       </div>
-    </main>
+      </main>
+</Base>
 
-    <footer class="start-footer">
-      <p class="mono">Swaim Engineering and Surveying &nbsp;·&nbsp; 506 North Mason, Bowie, TX 76230</p>
-      <p class="mono">
-        <a href={phoneHref}>{phone}</a> &nbsp;·&nbsp; <a href={emailHref}>{email}</a>
-      </p>
-    </footer>
+<style>
+  .start-main { padding: clamp(3rem, 8vw, 5.5rem) var(--pad) clamp(4rem, 9vw, 7rem); }
+  .start-intro { max-width: 40rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+  .start-intro h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.6vw, 3.1rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .start-sub { margin: 1.25rem 0 0; opacity: 0.75; max-width: 34rem; }
 
-    <style is:global>
-      :root {
-        --ink: #0e1f2a;
-        --ink-2: #16303f;
-        --buff: #e7dfd0;
-        --buff-2: #f3eee4;
-        --blue: #4a8ba8;
-        --flag: #e2571e;
-        --hair: rgba(231, 223, 208, 0.22);
+  /* ---------- form ---------- */
+  .start-form { max-width: 46rem; }
+  fieldset {
+    border: 0;
+    border-top: 1px solid rgba(14, 31, 42, 0.16);
+    margin: 0 0 2.75rem;
+    padding: 2rem 0 0;
+  }
+  legend { padding: 0; }
 
-        --display: "Archivo Narrow", "Archivo", system-ui, sans-serif;
-        --body: "Archivo", system-ui, -apple-system, sans-serif;
-        --mono: "IBM Plex Mono", ui-monospace, monospace;
+  .field { display: grid; gap: 0.45rem; margin-bottom: 1.4rem; }
+  .field label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .req { color: var(--flag); opacity: 1; letter-spacing: 0.1em; margin-left: 0.4rem; }
 
-        --pad: clamp(1.25rem, 9vw, 10rem);
-      }
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field select,
+  .field textarea {
+    font-family: var(--body);
+    font-size: 1rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid rgba(14, 31, 42, 0.25);
+    padding: 0.85rem 1rem;
+    width: 100%;
+    border-radius: 0;
+    appearance: none;
+  }
+  .field textarea { resize: vertical; line-height: 1.55; }
+  .field select { cursor: pointer; background-image: none; }
+  .field ::placeholder { opacity: 0.38; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: 2px solid var(--flag);
+    outline-offset: 0;
+    border-color: transparent;
+  }
+  .field input[type="file"] {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    padding: 0.75rem 0;
+  }
+  .field-hint { margin: 0.4rem 0 0; font-size: 0.84rem; opacity: 0.55; }
 
-      * { box-sizing: border-box; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .field-row.three { grid-template-columns: 2fr 0.7fr 1fr; }
+  @media (max-width: 620px) {
+    .field-row,
+    .field-row.three { grid-template-columns: 1fr; }
+  }
 
-      body.start-page {
-        margin: 0;
-        background: var(--buff-2);
-        color: var(--ink);
-        font-family: var(--body);
-        font-size: 17px;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
+  .checks { display: grid; gap: 0.6rem; margin-top: 0.2rem; }
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    font-family: var(--body) !important;
+    font-size: 0.95rem !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    opacity: 0.85 !important;
+  }
+  .check input { width: 17px; height: 17px; accent-color: var(--flag); flex: none; }
 
-      a { color: inherit; }
-      :focus-visible { outline: 2px solid var(--flag); outline-offset: 3px; }
+  /* ---------- actions ---------- */
+  .form-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .form-actions .btn-primary { padding: 1.05rem 2.2rem; }
+  .actions-note { margin: 0; font-size: 0.9rem; opacity: 0.6; }
+  .actions-note a { color: var(--flag); text-decoration: none; }
+  .actions-note a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
-      .mono {
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
+  /* ---------- confirmation ---------- */
+  .start-done { max-width: 40rem; }
+  .start-done[hidden] { display: none; }
+  .start-done h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 4.2vw, 2.8rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+  .start-done p { opacity: 0.78; }
+  .start-done a { color: var(--flag); }
+  .start-done .btn-ghost-dark { margin-top: 1.5rem; }
+</style>
 
-      .label {
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--blue);
-        margin: 0 0 1rem;
-      }
-      .label::before {
-        content: "";
-        width: 42px;
-        height: 2px;
-        background: currentColor;
-        flex: none;
-      }
+<script>
+  // Prefill the project name handed over from the homepage.
+  const params = new URLSearchParams(window.location.search);
+  const passed = params.get("project");
+  if (passed) {
+    const projectField = document.getElementById("project");
+    if (projectField) projectField.value = passed;
+  }
 
-      /* ---------- header ---------- */
-      .start-header {
-        background: var(--ink);
-        color: var(--buff);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 1.25rem var(--pad);
-      }
-      .brand img { height: 55px; width: auto; display: block; }
-      .back-link { text-decoration: none; opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
-      .back-link:hover { opacity: 1; color: var(--flag); }
+  // DEMO ONLY — no backend yet. Shows the confirmation state and
+  // discards the data. Wire this to a real handler before launch.
+  const form = document.getElementById("start-form");
+  const done = document.getElementById("start-done");
 
-      /* ---------- main ---------- */
-      .start-main { padding: clamp(3rem, 8vw, 5.5rem) var(--pad) clamp(4rem, 9vw, 7rem); }
-      .start-intro { max-width: 40rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
-      .start-intro h1 {
-        font-family: var(--display);
-        font-weight: 700;
-        font-size: clamp(2rem, 4.6vw, 3.1rem);
-        line-height: 1.05;
-        text-transform: uppercase;
-        margin: 0;
-      }
-      .start-sub { margin: 1.25rem 0 0; opacity: 0.75; max-width: 34rem; }
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name");
+      const phoneField = document.getElementById("phone");
+      if (!name.value.trim()) { name.focus(); return; }
+      if (!phoneField.value.trim()) { phoneField.focus(); return; }
 
-      /* ---------- form ---------- */
-      .start-form { max-width: 46rem; }
-      fieldset {
-        border: 0;
-        border-top: 1px solid rgba(14, 31, 42, 0.16);
-        margin: 0 0 2.75rem;
-        padding: 2rem 0 0;
-      }
-      legend { padding: 0; }
-
-      .field { display: grid; gap: 0.45rem; margin-bottom: 1.4rem; }
-      .field label {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        opacity: 0.7;
-      }
-      .req {
-        color: var(--flag);
-        opacity: 1;
-        letter-spacing: 0.1em;
-        margin-left: 0.4rem;
-      }
-
-      .field input[type="text"],
-      .field input[type="tel"],
-      .field input[type="email"],
-      .field select,
-      .field textarea {
-        font-family: var(--body);
-        font-size: 1rem;
-        color: var(--ink);
-        background: #fff;
-        border: 1px solid rgba(14, 31, 42, 0.25);
-        padding: 0.85rem 1rem;
-        width: 100%;
-        border-radius: 0;
-        appearance: none;
-      }
-      .field textarea { resize: vertical; line-height: 1.55; }
-      .field select { cursor: pointer; background-image: none; }
-      .field ::placeholder { opacity: 0.38; }
-      .field input:focus,
-      .field select:focus,
-      .field textarea:focus {
-        outline: 2px solid var(--flag);
-        outline-offset: 0;
-        border-color: transparent;
-      }
-      .field input[type="file"] {
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        padding: 0.75rem 0;
-      }
-      .field-hint { margin: 0.4rem 0 0; font-size: 0.84rem; opacity: 0.55; }
-
-      .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-      .field-row.three { grid-template-columns: 2fr 0.7fr 1fr; }
-      @media (max-width: 620px) {
-        .field-row,
-        .field-row.three { grid-template-columns: 1fr; }
-      }
-
-      .checks { display: grid; gap: 0.6rem; margin-top: 0.2rem; }
-      .check {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-        cursor: pointer;
-        font-family: var(--body) !important;
-        font-size: 0.95rem !important;
-        letter-spacing: normal !important;
-        text-transform: none !important;
-        opacity: 0.85 !important;
-      }
-      .check input { width: 17px; height: 17px; accent-color: var(--flag); flex: none; }
-
-      /* ---------- actions ---------- */
-      .form-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-      .btn-primary {
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        text-decoration: none;
-        padding: 1.05rem 2.2rem;
-        background: var(--flag);
-        color: #fff;
-        border: 0;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-      .btn-primary:hover { background: #c94815; }
-      .actions-note { margin: 0; font-size: 0.9rem; opacity: 0.6; }
-      .actions-note a { color: var(--flag); text-decoration: none; }
-      .actions-note a:hover { text-decoration: underline; text-underline-offset: 4px; }
-
-      /* ---------- done ---------- */
-      .start-done { max-width: 40rem; }
-      .start-done[hidden] { display: none; }
-      .start-done h2 {
-        font-family: var(--display);
-        font-weight: 700;
-        font-size: clamp(1.9rem, 4.2vw, 2.8rem);
-        line-height: 1.05;
-        text-transform: uppercase;
-        margin: 0 0 1.25rem;
-      }
-      .start-done p { opacity: 0.78; }
-      .start-done a { color: var(--flag); }
-      .btn-ghost-dark {
-        display: inline-block;
-        margin-top: 1.5rem;
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        text-decoration: none;
-        padding: 0.95rem 1.6rem;
-        border: 1px solid rgba(14, 31, 42, 0.3);
-        color: var(--ink) !important;
-      }
-      .btn-ghost-dark:hover { border-color: var(--flag); color: var(--flag) !important; }
-
-      /* ---------- footer ---------- */
-      .start-footer {
-        background: var(--ink);
-        color: var(--buff);
-        padding: 2rem var(--pad);
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-      .start-footer p { margin: 0; opacity: 0.6; }
-      .start-footer a { text-decoration: none; }
-      .start-footer a:hover { color: var(--flag); }
-    </style>
-
-    <script>
-      // Prefill the project name passed from the homepage starter field.
-      const params = new URLSearchParams(window.location.search);
-      const passed = params.get("project");
-      if (passed) {
-        const projectField = document.getElementById("project");
-        if (projectField) projectField.value = passed;
-      }
-
-      // DEMO ONLY — no backend yet. Shows the confirmation state.
-      const form = document.getElementById("start-form");
-      const done = document.getElementById("start-done");
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("name");
-        const phoneField = document.getElementById("phone");
-
-        if (!name.value.trim()) { name.focus(); return; }
-        if (!phoneField.value.trim()) { phoneField.focus(); return; }
-
-        form.hidden = true;
-        document.querySelector(".start-intro").hidden = true;
-        done.hidden = false;
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    </script>
-  </body>
-</html>
+      form.hidden = true;
+      document.querySelector(".start-intro").hidden = true;
+      done.hidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+</script>

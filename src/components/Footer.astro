@@ -1,0 +1,71 @@
+---
+// src/components/Footer.astro
+// The drafting title block. variant "slim" is the simple one-line
+// footer used on /start.
+import { site } from "../data/site.js";
+import Icon from "./Icon.astro";
+import Seal from "./Seal.astro";
+
+interface Props { variant?: "titleblock" | "slim"; }
+const { variant = "titleblock" } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+{variant === "slim" ? (
+  <footer class="slim-footer">
+    <p class="mono">{site.name} &nbsp;·&nbsp; {site.street}, {site.cityStateZip}</p>
+    <p class="mono">
+      <a href={site.phoneHref}>{site.phone}</a> &nbsp;·&nbsp;
+      <a href={site.emailHref}>{site.email}</a>
+    </p>
+  </footer>
+) : (
+  <footer class="title-block">
+    <div class="tb-cell tb-firm">
+      <img src="/assets/swaim-logo-inverted.webp" alt={site.name} />
+      <address class="tb-address">
+        <span class="tb-line">
+          <Icon name="map" />
+          <a href={site.mapHref} target="_blank" rel="noopener noreferrer">
+            {site.street}<br />{site.cityStateZip}
+          </a>
+        </span>
+        <span class="tb-line">
+          <Icon name="phone" />
+          <a href={site.phoneHref}>{site.phone}</a>
+        </span>
+        <span class="tb-line">
+          <Icon name="mail" />
+          <a href={site.emailHref}>{site.email}</a>
+        </span>
+        <span class="tb-social">
+          <a href={site.facebookHref} target="_blank" rel="noopener noreferrer" aria-label={`${site.name} on Facebook`}>
+            <Icon name="facebook" />
+          </a>
+          <a href={site.linkedinHref} target="_blank" rel="noopener noreferrer" aria-label={`${site.name} on LinkedIn`}>
+            <Icon name="linkedin" />
+          </a>
+        </span>
+      </address>
+    </div>
+
+    {site.footerCols.map((col) => (
+      <div class="tb-cell">
+        <p class="tb-label">{col.label}</p>
+        {col.links.map((l) => <a href={l.href}>{l.text}</a>)}
+      </div>
+    ))}
+
+    <div class="tb-cell tb-stamp">
+      <p class="tb-label">Licensed</p>
+      <div class="tb-seals">
+        <Seal which="pe" />
+        <Seal which="rpls" />
+      </div>
+    </div>
+
+    <div class="tb-bar mono">
+      <span>&copy; {year} {site.name}</span>
+    </div>
+  </footer>
+)}

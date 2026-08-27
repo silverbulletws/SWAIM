@@ -1,14 +1,8 @@
 ---
-// src/pages/company.astro
-// Swaim Engineering and Surveying — company page
-
-const phone = "940-872-5075";
-const phoneHref = "tel:+19408725075";
-const email = "info@swaimengineering.com";
-const emailHref = "mailto:info@swaimengineering.com";
-const mapHref = "https://www.google.com/maps/search/?api=1&query=506+N+Mason+St,+Bowie,+TX+76230";
-const facebookHref = "https://www.facebook.com/";
-const linkedinHref = "https://www.linkedin.com/company/swaim-engineering-&-surveying/";
+// src/pages/about.astro
+import Base from "../layouts/Base.astro";
+import Seal from "../components/Seal.astro";
+import { site, counties } from "../data/site.js";
 
 const records = [
   { era: "Early 1930s – 1940s", who: "M. F. Leonard", note: "The oldest continuous run in the office, plus records from W. A. Morris that predate Leonard's." },
@@ -29,755 +23,331 @@ const team = [
   { name: "Dane Williams", role: "Field crew", years: "1 year" },
 ];
 
-const counties = [
-  "Montague", "Wise", "Parker", "Jack", "Denton",
-  "Tarrant", "Cooke", "Dallas", "Young", "Wichita", "Clay",
+const creds = [
+  { term: "Texas Professional Engineer", detail: "License 84832" },
+  { term: "Texas Registered Professional Land Surveyor", detail: "License 5550" },
+  { term: "B.S. Civil Engineering", detail: "University of Texas at Arlington, 1993" },
+  { term: "Firm registration", detail: "Texas Board of Professional Engineers, April 2003" },
+  { term: "Professional memberships", detail: "ASCE · Texas Society of Professional Surveyors" },
+  { term: "GPS and geodetic training", detail: "RTK surveying, geodetic control, network adjustments" },
 ];
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Company — Swaim Engineering and Surveying</title>
-    <meta
-      name="description"
-      content="Swaim Engineering and Surveying has served Bowie and North Texas since 2003, with survey records for Montague County reaching back to the 1930s."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Narrow:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-
-  <body class="co-page">
-    <header class="co-header">
-      <a class="brand" href="/">
-        <img src="/assets/swaim-logo-inverted.webp" alt="Swaim Engineering and Surveying" />
-      </a>
-      <nav class="nav">
-        <a href="/about">Company</a>
-        <a href="/surveying">Surveying</a>
-        <a href="/engineering">Engineering</a>
-        <a class="nav-phone" href={phoneHref}>{phone}</a>
-        <a class="nav-social" href={facebookHref} target="_blank" rel="noopener noreferrer" aria-label="Swaim Engineering on Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5H16.7V4.6c-.29-.04-1.27-.12-2.42-.12-2.4 0-4.03 1.46-4.03 4.15v2.32H7.5V14h2.75v8z"/></svg>
-        </a>
-      </nav>
-    </header>
-
-    <!-- ============ INTRO ============ -->
-    <section class="co-intro">
-      <div class="co-intro-copy">
-        <p class="label">Since April 2003</p>
-        <h1>A Bowie firm, run by the man who signs the drawings</h1>
-        <p class="co-lede">
-          <strong>Jason G. Swaim</strong> opened the office on North Mason in April of 2003 after ten years with Halff
-          Associates. He holds both a Professional Engineer license and a Registered Professional
-          Land Surveyor license in Texas &mdash; the same two seals you see at the bottom of our
-          drawings, and the reason a project doesn't have to be handed between two firms.
-        </p>
-      </div>
-      <figure class="co-intro-figure">
-        <img src="/assets/jason-at-his-desk.webp" alt="Jason Swaim at his desk in the Bowie office" />
-      </figure>
-    </section>
-
-    <!-- ============ MISSION ============ -->
-    <section class="co-mission">
-      <blockquote>
-        <span class="mission-label mono">Our mission, since 2003</span>
-        Our mission is to provide engineering and surveying services
-        of exceptional value to our clients and the North Texas
-        community, while enhancing our environment through dedication,
-        expertise, experience, ethics, and technology.
-      </blockquote>
-    </section>
-
-    <!-- ============ RECORDS ============ -->
-    <section class="co-records">
-      <div class="co-records-head">
-        <p class="label light">The vault</p>
-        <h2>Ninety years of Montague County, in one office</h2>
-        <p>
-          When a surveyor retires around here, his records have to go somewhere. Over four
-          generations they've come to us &mdash; which means a boundary question on your tract can
-          often be answered from field notes written decades before the fence went up.
-        </p>
-      </div>
-
-      <ol class="ledger">
-        {records.map((r) => (
-          <li>
-            <span class="ledger-era mono">{r.era}</span>
-            <span class="ledger-who">{r.who}</span>
-            <span class="ledger-note">{r.note}</span>
-          </li>
-        ))}
-      </ol>
-
-      <p class="co-records-foot">
-        If your land has a history in this county, there's a fair chance it's already in a drawer
-        down the hall.
+<Base
+  title="Company — Swaim Engineering and Surveying"
+  description="Swaim Engineering and Surveying has served Bowie and North Texas since 2003, with survey records for Montague County reaching back to the 1930s."
+>
+  <!-- ============ INTRO ============ -->
+  <section class="co-intro">
+    <div class="co-intro-copy">
+      <p class="label">Since April 2003</p>
+      <h1>A Bowie firm, run by the man who signs the drawings</h1>
+      <p class="co-lede">
+        Jason Swaim opened the office on North Mason in April of 2003 after ten years with Halff
+        Associates. He holds both a Professional Engineer license and a Registered Professional
+        Land Surveyor license in Texas — the same two seals you see at the bottom of our
+        drawings, and the reason a project doesn't have to be handed between two firms.
       </p>
-    </section>
+    </div>
+    <figure class="co-intro-figure">
+      <img src="/assets/jason-at-his-desk.webp" alt="Jason Swaim at his desk in the Bowie office" />
+    </figure>
+  </section>
 
-    <!-- ============ CREDENTIALS ============ -->
-    <section class="co-creds">
-      <div class="co-creds-copy">
-        <p class="label">On the wall</p>
-        <h2>Licensed, and kept that way</h2>
-        <p>
-          Both licenses are active and current, and both carry continuing education requirements
-          that don't stop.
-        </p>
+  <!-- ============ MISSION ============ -->
+  <section class="co-mission">
+    <blockquote>
+      <span class="mission-label mono">Our mission, since 2003</span>
+      Our mission is to provide engineering and surveying services of exceptional value to our
+      clients and the North Texas community, while enhancing our environment through dedication,
+      expertise, experience, ethics, and technology.
+    </blockquote>
+  </section>
 
-        <dl class="cred-list">
-          <div>
-            <dt>Texas Professional Engineer</dt>
-            <dd class="mono">License 84832</dd>
-          </div>
-          <div>
-            <dt>Texas Registered Professional Land Surveyor</dt>
-            <dd class="mono">License 5550</dd>
-          </div>
-          <div>
-            <dt>B.S. Civil Engineering</dt>
-            <dd class="mono">University of Texas at Arlington, 1993</dd>
-          </div>
-          <div>
-            <dt>Firm registration</dt>
-            <dd class="mono">Texas Board of Professional Engineers, April 2003</dd>
-          </div>
-          <div>
-            <dt>Professional memberships</dt>
-            <dd class="mono">ASCE &nbsp;·&nbsp; Texas Society of Professional Surveyors</dd>
-          </div>
-          <div>
-            <dt>GPS and geodetic training</dt>
-            <dd class="mono">RTK surveying, geodetic control, network adjustments</dd>
-          </div>
-        </dl>
-      </div>
-
-      <figure class="co-creds-figure">
-        <button class="seal-btn" type="button"
-          data-seal="/assets/swaim-texas-land-surveyor-seal.webp"
-          data-caption="Texas Registered Professional Land Surveyor">
-          <img src="/assets/swaim-texas-land-surveyor-seal.webp" alt="Texas RPLS seal — click to enlarge" />
-        </button>
-        <button class="seal-btn" type="button"
-          data-seal="/assets/swaim-texas-professional-engineer-seal.webp"
-          data-caption="Texas Professional Engineer">
-          <img src="/assets/swaim-texas-professional-engineer-seal.webp" alt="Texas P.E. seal — click to enlarge" />
-        </button>
-      </figure>
-    </section>
-
-    <!-- ============ TEAM ============ -->
-    <section class="co-team">
-      <div class="co-team-head">
-        <p class="label">The office</p>
-        <h2>Nine people, and a lot of miles</h2>
-        <p>
-          Add it up and there's close to two hundred years of surveying experience in this
-          building. Jo Lee has been doing title research since 1973. Hardy Seay has been at it
-          since the sixties.
-        </p>
-      </div>
-
-      <ul class="team-list">
-        {team.map((t) => (
-          <li>
-            <span class="team-name">{t.name}</span>
-            <span class="team-role">{t.role}</span>
-            <span class="team-years mono">{t.years}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <!-- ============ WHERE ============ -->
-    <section class="co-where">
-      <img class="co-where-bg" src="/assets/pic-of-old-mountague-county-soil-survey-on-desk.webp" alt="" aria-hidden="true" />
-      <div class="co-where-scrim"></div>
-      <div class="co-where-inner">
-        <p class="label light">Where we work</p>
-        <h2>North Texas, mostly within a couple hours of the shop</h2>
-        <ul class="county-list">
-          {counties.map((c) => <li class="mono">{c}</li>)}
-        </ul>
-        <p>
-          Plus surrounding counties. If you're not sure whether you're in our range, call and ask
-          &mdash; the answer is usually yes.
-        </p>
-      </div>
-    </section>
-
-    <!-- ============ CTA ============ -->
-    <section class="co-cta">
-      <h2>Tell us about the project</h2>
-      <div class="co-cta-actions">
-        <a class="btn-primary" href="/start">Start a project</a>
-        <a class="btn-ghost-dark" href={phoneHref}>Call {phone}</a>
-      </div>
-    </section>
-
-    <!-- ============ FOOTER AS TITLE BLOCK ============ -->
-    <footer class="title-block">
-      <div class="tb-cell tb-firm">
-        <img src="/assets/swaim-logo-inverted.webp" alt="Swaim Engineering and Surveying" />
-        <address class="tb-address">
-          <span class="tb-line">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-            <a href={mapHref} target="_blank" rel="noopener noreferrer">506 North Mason<br />Bowie, TX 76230</a>
-          </span>
-          <span class="tb-line">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5C11.6 19 5 12.4 5 5.1A1.5 1.5 0 0 1 6.5 3.5z"/></svg>
-            <a href={phoneHref}>{phone}</a>
-          </span>
-          <span class="tb-line">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>
-            <a href={emailHref}>{email}</a>
-          </span>
-          <span class="tb-social">
-            <a href={facebookHref} target="_blank" rel="noopener noreferrer" aria-label="Swaim Engineering on Facebook">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5H16.7V4.6c-.29-.04-1.27-.12-2.42-.12-2.4 0-4.03 1.46-4.03 4.15v2.32H7.5V14h2.75v8z"/></svg>
-            </a>
-            <a href={linkedinHref} target="_blank" rel="noopener noreferrer" aria-label="Swaim Engineering on LinkedIn">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0zM3.3 8.4h3.4V20H3.3zM9.5 8.4h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V20h-3.4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.53-2.25 3.1V20H9.5z"/></svg>
-            </a>
-          </span>
-        </address>
-      </div>
-      <div class="tb-cell">
-        <p class="tb-label">Surveying</p>
-        <a href="/surveying">Boundary</a>
-        <a href="/surveying">Platting</a>
-        <a href="/surveying">Staking</a>
-        <a href="/surveying">Oil &amp; gas</a>
-      </div>
-      <div class="tb-cell">
-        <p class="tb-label">Engineering</p>
-        <a href="/engineering">Site development</a>
-        <a href="/engineering">Roadway</a>
-        <a href="/engineering">Drainage</a>
-        <a href="/engineering">Water &amp; sewer</a>
-      </div>
-      <div class="tb-cell tb-stamp">
-        <p class="tb-label">Licensed</p>
-        <div class="tb-seals">
-          <button class="seal-btn" type="button"
-            data-seal="/assets/swaim-texas-professional-engineer-seal.webp"
-            data-caption="Texas Professional Engineer">
-            <img src="/assets/swaim-texas-professional-engineer-seal.webp" alt="Texas P.E. seal" />
-          </button>
-          <button class="seal-btn" type="button"
-            data-seal="/assets/swaim-texas-land-surveyor-seal.webp"
-            data-caption="Texas Registered Professional Land Surveyor">
-            <img src="/assets/swaim-texas-land-surveyor-seal.webp" alt="Texas RPLS seal" />
-          </button>
-        </div>
-      </div>
-      <div class="tb-bar mono">
-        <span>&copy; {new Date().getFullYear()} Swaim Engineering and Surveying</span>
-      </div>
-    </footer>
-
-    <!-- ============ LIGHTBOX ============ -->
-    <div class="lightbox" id="lightbox" hidden>
-      <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
-      <figure>
-        <img id="lightbox-img" src="" alt="" />
-        <figcaption id="lightbox-cap" class="mono"></figcaption>
-      </figure>
+  <!-- ============ RECORDS ============ -->
+  <section class="co-records">
+    <div class="co-records-head">
+      <p class="label light">The vault</p>
+      <h2>Ninety years of Montague County, in one office</h2>
+      <p>
+        When a surveyor retires around here, his records have to go somewhere. Over four
+        generations they've come to us — which means a boundary question on your tract can
+        often be answered from field notes written decades before the fence went up.
+      </p>
     </div>
 
-    <style is:global>
-      /* ---------- tokens ---------- */
-      :root {
-        --ink: #0e1f2a;
-        --ink-2: #16303f;
-        --buff: #e7dfd0;
-        --buff-2: #f3eee4;
-        --blue: #4a8ba8;
-        --flag: #e2571e;
-        --hair: rgba(231, 223, 208, 0.22);
+    <ol class="ledger">
+      {records.map((r) => (
+        <li>
+          <span class="ledger-era mono">{r.era}</span>
+          <span class="ledger-who">{r.who}</span>
+          <span class="ledger-note">{r.note}</span>
+        </li>
+      ))}
+    </ol>
 
-        --display: "Archivo Narrow", "Archivo", system-ui, sans-serif;
-        --body: "Archivo", system-ui, -apple-system, sans-serif;
-        --mono: "IBM Plex Mono", ui-monospace, monospace;
-        --serif: "Source Serif 4", Georgia, serif;
+    <p class="co-records-foot">
+      If your land has a history in this county, there's a fair chance it's already in a drawer
+      down the hall.
+    </p>
+  </section>
 
-        --pad: clamp(1.25rem, 9vw, 10rem);
-      }
+  <!-- ============ CREDENTIALS ============ -->
+  <section class="co-creds">
+    <div class="co-creds-copy">
+      <p class="label">On the wall</p>
+      <h2>Licensed, and kept that way</h2>
+      <p>
+        Both licenses are active and current, and both carry continuing education requirements
+        that don't stop.
+      </p>
 
-      * { box-sizing: border-box; }
+      <dl class="cred-list">
+        {creds.map((c) => (
+          <div>
+            <dt>{c.term}</dt>
+            <dd class="mono">{c.detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
 
-      body.co-page {
-        margin: 0;
-        background: var(--buff-2);
-        color: var(--ink);
-        font-family: var(--body);
-        font-size: 17px;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
+    <figure class="co-creds-figure">
+      <Seal which="rpls" />
+      <Seal which="pe" />
+    </figure>
+  </section>
 
-      h1, h2 {
-        font-family: var(--display);
-        font-weight: 700;
-        line-height: 1.05;
-        letter-spacing: -0.01em;
-        text-transform: uppercase;
-        margin: 0;
-      }
+  <!-- ============ TEAM ============ -->
+  <section class="co-team">
+    <div class="co-team-head">
+      <p class="label">The office</p>
+      <h2>Nine people, and a lot of miles</h2>
+      <p>
+        Add it up and there's close to two hundred years of surveying experience in this
+        building. Jo Lee has been doing title research since 1973. Hardy Seay has been at it
+        since the sixties.
+      </p>
+    </div>
 
-      a { color: inherit; }
-      :focus-visible { outline: 2px solid var(--flag); outline-offset: 3px; }
+    <ul class="team-list">
+      {team.map((t) => (
+        <li>
+          <span class="team-name">{t.name}</span>
+          <span class="team-role">{t.role}</span>
+          <span class="team-years mono">{t.years}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
 
-      .mono {
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
+  <!-- ============ WHERE ============ -->
+  <section class="co-where on-dark">
+    <img class="co-where-bg" src="/assets/pic-of-old-mountague-county-soil-survey-on-desk.webp" alt="" aria-hidden="true" />
+    <div class="co-where-scrim"></div>
+    <div class="co-where-inner">
+      <p class="label light">Where we work</p>
+      <h2>North Texas, mostly within a couple hours of the shop</h2>
+      <ul class="county-list">
+        {counties.map((c) => <li class="mono">{c}</li>)}
+      </ul>
+      <p>
+        Plus surrounding counties. If you're not sure whether you're in our range, call and ask
+        — the answer is usually yes.
+      </p>
+    </div>
+  </section>
 
-      .label {
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--blue);
-        margin: 0 0 1.25rem;
-      }
-      .label::before {
-        content: "";
-        width: 42px;
-        height: 2px;
-        background: currentColor;
-        flex: none;
-      }
-      .label.light { color: var(--buff); opacity: 0.8; }
+  <!-- ============ CTA ============ -->
+  <section class="co-cta">
+    <h2>Tell us about the project</h2>
+    <div class="co-cta-actions">
+      <a class="btn-primary" href="/start">Start a project</a>
+      <a class="btn-ghost-dark" href={site.phoneHref}>Call {site.phone}</a>
+    </div>
+  </section>
+</Base>
 
-      /* ---------- header ---------- */
-      .co-header {
-        background: var(--ink);
-        color: var(--buff);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 1.25rem var(--pad);
-      }
-      .brand img { height: 55px; width: auto; display: block; }
-      .nav {
-        display: flex;
-        align-items: center;
-        gap: 1.75rem;
-        font-family: var(--mono);
-        font-size: 0.84rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-      .nav a { text-decoration: none; opacity: 0.8; transition: opacity 0.2s; }
-      .nav a:hover { opacity: 1; }
-      .nav-phone { border: 1px solid var(--hair); padding: 0.5rem 0.9rem; opacity: 1 !important; }
-      .nav-phone:hover { border-color: var(--flag); color: var(--flag); }
-      .nav-social {
-        display: inline-flex;
-        align-items: center;
-        opacity: 0.8;
-        transition: opacity 0.2s, color 0.2s;
-      }
-      .nav-social svg { width: 20px; height: 20px; fill: currentColor; }
-      .nav-social:hover { opacity: 1; color: var(--flag); }
-      @media (max-width: 860px) { .nav a:not(.nav-phone):not(.nav-social) { display: none; } }
+<style>
+  /* ---------- intro ---------- */
+  .co-intro {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+    padding: clamp(3.5rem, 9vw, 6.5rem) var(--pad) 0;
+  }
+  .co-intro-copy { align-self: start; }
+  .co-intro h1 { font-size: clamp(2.1rem, 4.8vw, 3.4rem); text-transform: uppercase; }
+  .co-lede { margin: 1.5rem 0 0; opacity: 0.8; max-width: 36rem; }
+  .co-intro-figure { margin: 0; }
+  .co-intro-figure img { width: 100%; height: auto; display: block; }
+  @media (max-width: 860px) { .co-intro { grid-template-columns: 1fr; } }
 
-      /* ---------- intro ---------- */
-      .co-intro {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: clamp(2rem, 6vw, 5rem);
-        align-items: center;
-        padding: clamp(3.5rem, 9vw, 6.5rem) var(--pad) 0;
-      }
-      .co-intro-copy { align-self: start; }
-      .co-intro h1 { font-size: clamp(2.1rem, 4.8vw, 3.4rem); }
-      .co-lede { margin: 1.5rem 0 0; opacity: 0.8; max-width: 36rem; }
-      .co-intro-figure { margin: 0; }
-      .co-intro-figure img { width: 100%; height: auto; display: block; }
-      @media (max-width: 860px) { .co-intro { grid-template-columns: 1fr; } }
+  /* ---------- mission ---------- */
+  .co-mission { padding: 0 var(--pad) clamp(3.5rem, 8vw, 6rem); }
+  .co-mission blockquote {
+    margin: 0;
+    max-width: 46rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+    line-height: 1.4;
+    border-left: 2px solid var(--flag);
+    padding-left: clamp(1.25rem, 3vw, 2rem);
+    opacity: 0.85;
+  }
+  .mission-label {
+    display: block;
+    color: var(--blue);
+    margin-bottom: 1rem;
+    font-style: normal;
+  }
 
-      /* ---------- mission ---------- */
-      .co-mission { padding: 0 var(--pad) clamp(3.5rem, 8vw, 6rem); }
-      .co-mission blockquote {
-        margin: 0;
-        max-width: 46rem;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: clamp(1.25rem, 2.6vw, 1.7rem);
-        line-height: 1.4;
-        border-left: 2px solid var(--flag);
-        padding-left: clamp(1.25rem, 3vw, 2rem);
-        opacity: 0.85;
-      }
-      .mission-label {
-        display: block;
-        color: var(--blue);
-        margin-bottom: 1rem;
-        font-style: normal;
-      }
-      
-      /* ---------- records ---------- */
-      .co-records {
-        background: var(--ink);
-        color: var(--buff);
-        padding: clamp(4rem, 10vw, 8rem) var(--pad);
-      }
-      .co-records-head { max-width: 44rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-      .co-records-head h2 { font-size: clamp(1.9rem, 4.2vw, 3rem); }
-      .co-records-head p { margin: 1.25rem 0 0; opacity: 0.8; }
+  /* ---------- records ---------- */
+  .co-records {
+    background: var(--ink);
+    color: var(--buff);
+    padding: clamp(4rem, 10vw, 8rem) var(--pad);
+  }
+  .co-records-head { max-width: 44rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .co-records-head h2 { font-size: clamp(1.9rem, 4.2vw, 3rem); text-transform: uppercase; }
+  .co-records-head p { margin: 1.25rem 0 0; opacity: 0.8; }
 
-      .ledger { list-style: none; margin: 0; padding: 0; }
-      .ledger li {
-        display: grid;
-        grid-template-columns: 15rem 1fr;
-        gap: 0.4rem clamp(1.5rem, 4vw, 3rem);
-        padding: 1.6rem 0;
-        border-top: 1px solid var(--hair);
-      }
-      .ledger li:last-child { border-bottom: 1px solid var(--hair); }
-      .ledger-era { color: var(--blue); align-self: start; }
-      .ledger-who {
-        font-family: var(--display);
-        font-weight: 700;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        letter-spacing: 0.01em;
-      }
-      .ledger-note { grid-column: 2; font-size: 0.95rem; opacity: 0.72; }
-      @media (max-width: 720px) {
-        .ledger li { grid-template-columns: 1fr; }
-        .ledger-note { grid-column: 1; }
-      }
+  .ledger { list-style: none; margin: 0; padding: 0; }
+  .ledger li {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    gap: 0.4rem clamp(1.5rem, 4vw, 3rem);
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--hair);
+  }
+  .ledger li:last-child { border-bottom: 1px solid var(--hair); }
+  .ledger-era { color: var(--blue); align-self: start; }
+  .ledger-who {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .ledger-note { grid-column: 2; font-size: 0.95rem; opacity: 0.72; }
+  @media (max-width: 720px) {
+    .ledger li { grid-template-columns: 1fr; }
+    .ledger-note { grid-column: 1; }
+  }
 
-      .co-records-foot {
-        margin: 2.5rem 0 0;
-        max-width: 34rem;
-        font-family: var(--serif);
-        font-style: italic;
-        font-size: 1.2rem;
-        opacity: 0.75;
-      }
+  .co-records-foot {
+    margin: 2.5rem 0 0;
+    max-width: 34rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    opacity: 0.75;
+  }
 
-      /* ---------- credentials ---------- */
-      .co-creds {
-        background: #fff;
-        display: grid;
-        grid-template-columns: 1.3fr 0.7fr;
-        align-items: stretch;
-        gap: clamp(2rem, 6vw, 5rem);
-        align-items: start;
-        padding: clamp(4rem, 10vw, 7rem) var(--pad);
-      }
-      .co-creds h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); }
-      .co-creds-copy > p { margin: 1.25rem 0 2.25rem; opacity: 0.75; max-width: 32rem; }
+  /* ---------- credentials ---------- */
+  .co-creds {
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: stretch;
+    padding: clamp(4rem, 10vw, 7rem) var(--pad);
+  }
+  .co-creds h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); text-transform: uppercase; }
+  .co-creds-copy > p { margin: 1.25rem 0 2.25rem; opacity: 0.75; max-width: 32rem; }
 
-      .cred-list { margin: 0; display: grid; gap: 1.25rem; }
-      .cred-list dt {
-        font-family: var(--display);
-        font-weight: 700;
-        font-size: 1.02rem;
-        text-transform: uppercase;
-        letter-spacing: 0.01em;
-      }
-      .cred-list dd { margin: 0.3rem 0 0; opacity: 0.62; }
+  .cred-list { margin: 0; display: grid; gap: 1.25rem; }
+  .cred-list dt {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.02rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .cred-list dd { margin: 0.3rem 0 0; opacity: 0.62; }
 
-      .co-creds-figure {
-        margin: 0;
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-        justify-content: center;
-        align-self: stretch;
-      }
-      @media (max-width: 860px) {
-        .co-creds { grid-template-columns: 1fr; }
-        .co-creds-figure { justify-content: flex-start; }
-      }
+  .co-creds-figure {
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+  @media (max-width: 860px) {
+    .co-creds { grid-template-columns: 1fr; }
+    .co-creds-figure { justify-content: flex-start; }
+  }
 
-      /* ---------- team ---------- */
-      .co-team { background: var(--buff); padding: clamp(4rem, 10vw, 7rem) var(--pad); }
-      .co-team-head { max-width: 42rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
-      .co-team-head h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); }
-      .co-team-head p { margin: 1.25rem 0 0; opacity: 0.75; }
+  /* ---------- team ---------- */
+  .co-team { background: var(--buff); padding: clamp(4rem, 10vw, 7rem) var(--pad); }
+  .co-team-head { max-width: 42rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+  .co-team-head h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); text-transform: uppercase; }
+  .co-team-head p { margin: 1.25rem 0 0; opacity: 0.75; }
 
-      .team-list { list-style: none; margin: 0; padding: 0; }
-      .team-list li {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr auto;
-        gap: 0.3rem 1.5rem;
-        align-items: baseline;
-        padding: 1.15rem 0;
-        border-bottom: 1px solid rgba(14, 31, 42, 0.14);
-      }
-      .team-list li:first-child { border-top: 1px solid rgba(14, 31, 42, 0.28); }
-      .team-name {
-        font-family: var(--display);
-        font-weight: 700;
-        font-size: 1.08rem;
-        text-transform: uppercase;
-      }
-      .team-role { font-size: 0.95rem; opacity: 0.7; }
-      .team-years { color: var(--flag); }
-      @media (max-width: 720px) {
-        .team-list li { grid-template-columns: 1fr auto; }
-        .team-role { grid-column: 1 / -1; }
-      }
+  .team-list { list-style: none; margin: 0; padding: 0; }
+  .team-list li {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr auto;
+    gap: 0.3rem 1.5rem;
+    align-items: baseline;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--hair-ink);
+  }
+  .team-list li:first-child { border-top: 1px solid var(--hair-ink-2); }
+  .team-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.08rem;
+    text-transform: uppercase;
+  }
+  .team-role { font-size: 0.95rem; opacity: 0.7; }
+  .team-years { color: var(--flag); }
+  @media (max-width: 720px) {
+    .team-list li { grid-template-columns: 1fr auto; }
+    .team-role { grid-column: 1 / -1; }
+  }
 
-      /* ---------- where ---------- */
-      .co-where {
-        position: relative;
-        overflow: hidden;
-        color: var(--buff);
-        padding: clamp(4rem, 11vw, 8rem) var(--pad);
-      }
-      .co-where-bg {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: top;
-      }
-      .co-where-scrim {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(100deg, rgba(14, 31, 42, 0.94) 30%, rgba(14, 31, 42, 0.62) 100%);
-      }
-      .co-where-inner { position: relative; max-width: 42rem; }
-      .co-where-inner h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); margin-bottom: 1.75rem; }
-      .co-where-inner p { opacity: 0.8; margin: 1.75rem 0 0; }
+  /* ---------- where ---------- */
+  .co-where {
+    position: relative;
+    overflow: hidden;
+    color: var(--buff);
+    padding: clamp(4rem, 11vw, 8rem) var(--pad);
+  }
+  .co-where-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .co-where-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, rgba(14, 31, 42, 0.94) 30%, rgba(14, 31, 42, 0.62) 100%);
+  }
+  .co-where-inner { position: relative; max-width: 42rem; }
+  .co-where-inner h2 {
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+    text-transform: uppercase;
+    margin-bottom: 1.75rem;
+  }
+  .co-where-inner p { opacity: 0.8; margin: 1.75rem 0 0; }
 
-      .county-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-      }
-      .county-list li {
-        border: 1px solid var(--hair);
-        padding: 0.5rem 0.9rem;
-        transition: background 0.2s, border-color 0.2s, color 0.2s;
-      }
-      .county-list li:hover {
-        background: var(--buff);
-        border-color: var(--buff);
-        color: var(--ink);
-      }
+  /* ---------- cta ---------- */
+  .co-cta { padding: clamp(4rem, 9vw, 6.5rem) var(--pad); text-align: center; }
+  .co-cta h2 {
+    font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .co-cta-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+</style>
 
-      /* ---------- cta ---------- */
-      .co-cta { padding: clamp(4rem, 9vw, 6.5rem) var(--pad); text-align: center; }
-      .co-cta h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); margin-bottom: 2rem; }
-      .co-cta-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
-      .btn-primary,
-      .btn-ghost-dark {
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        text-decoration: none;
-        padding: 1.05rem 2rem;
-        transition: background 0.2s, border-color 0.2s, color 0.2s;
-      }
-      .btn-primary { background: var(--flag); color: #fff; border: 0; }
-      .btn-primary:hover { background: #c94815; }
-      .btn-ghost-dark { border: 1px solid rgba(14, 31, 42, 0.3); }
-      .btn-ghost-dark:hover { border-color: var(--flag); color: var(--flag); }
-
-      /* ---------- footer / title block ---------- */
-      .title-block {
-        background: var(--ink);
-        color: var(--buff);
-        border-top: 2px solid var(--buff);
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        padding: 0 calc(var(--pad) - 1.5rem);
-      }
-      .tb-cell {
-        padding: 2rem 1.5rem;
-        border-right: 1px solid var(--hair);
-        display: grid;
-        gap: 0.55rem;
-        align-content: start;
-      }
-      .tb-stamp { border-right: none; }
-      .tb-cell a {
-        text-decoration: none;
-        font-size: 0.92rem;
-        opacity: 0.72;
-        transition: opacity 0.2s, color 0.2s;
-      }
-      .tb-cell a:hover { opacity: 1; color: var(--flag); }
-      .tb-label {
-        font-family: var(--mono);
-        font-size: 0.66rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--blue);
-        margin: 0 0 0.4rem;
-      }
-      .tb-firm img { height: 40px; width: auto; }
-      .tb-address {
-        font-style: normal;
-        font-size: 0.92rem;
-        line-height: 1.4;
-        opacity: 0.72;
-        margin: 0;
-        display: grid;
-        gap: 0.7rem;
-      }
-      .tb-address a { opacity: 1; }
-      .tb-line {
-        display: grid;
-        grid-template-columns: 16px 1fr;
-        gap: 0.65rem;
-        align-items: start;
-      }
-      .tb-line a:hover { color: var(--flag); }
-      .tb-line svg {
-        width: 16px;
-        height: 16px;
-        margin-top: 0.22em;
-        fill: none;
-        stroke: var(--blue);
-        stroke-width: 1.6;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-      .tb-social {
-        display: flex;
-        gap: 0.85rem;
-        padding-left: calc(16px + 0.65rem);
-      }
-      .tb-social a { display: inline-flex; opacity: 0.72; transition: opacity 0.2s, color 0.2s; }
-      .tb-social svg { width: 20px; height: 20px; fill: currentColor; }
-      .tb-social a:hover { opacity: 1; color: var(--flag); }
-      .tb-seals { display: flex; flex-direction: row-reverse; gap: 0.6rem; }
-      .tb-seals .seal-btn img { width: 135px; height: auto; }
-      .tb-bar {
-        grid-column: 1 / -1;
-        border-top: 1px solid var(--hair);
-        padding: 1rem 1.5rem;
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-        opacity: 0.55;
-      }
-      @media (max-width: 980px) {
-        .title-block { grid-template-columns: 1fr 1fr; }
-        .tb-cell { border-bottom: 1px solid var(--hair); }
-      }
-      @media (max-width: 560px) {
-        .title-block { grid-template-columns: 1fr; }
-        .tb-cell { border-right: none; }
-      }
-
-      /* ---------- lightbox ---------- */
-      .seal-btn {
-        background: none;
-        border: 0;
-        padding: 0;
-        cursor: zoom-in;
-        display: block;
-        transition: transform 0.2s;
-      }
-      .seal-btn:hover { transform: scale(1.05); }
-      .seal-btn img {
-        width: clamp(176px, 22vw, 260px);
-        height: auto;
-        display: block;
-      }
-
-      .lightbox {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        background: rgba(14, 31, 42, 0.94);
-        display: grid;
-        place-items: center;
-        padding: var(--pad);
-      }
-      .lightbox[hidden] { display: none; }
-      .lightbox figure { margin: 0; text-align: center; }
-      .lightbox img {
-        max-width: min(560px, 88vw);
-        max-height: 76vh;
-        width: auto;
-        height: auto;
-      }
-      .lightbox figcaption { margin-top: 1.25rem; color: var(--buff); opacity: 0.7; }
-      .lightbox-close {
-        position: absolute;
-        top: 1.5rem;
-        right: var(--pad);
-        background: none;
-        border: 1px solid var(--hair);
-        color: var(--buff);
-        font-size: 1.75rem;
-        line-height: 1;
-        width: 3rem;
-        height: 3rem;
-        cursor: pointer;
-        transition: border-color 0.2s, color 0.2s;
-      }
-      .lightbox-close:hover { border-color: var(--flag); color: var(--flag); }
-    </style>
-
-    <script>
-      const box = document.getElementById("lightbox");
-      const boxImg = document.getElementById("lightbox-img");
-      const boxCap = document.getElementById("lightbox-cap");
-      let lastFocus = null;
-
-      function openBox(src, caption, trigger) {
-        lastFocus = trigger;
-        boxImg.src = src;
-        boxImg.alt = caption;
-        boxCap.textContent = caption;
-        box.hidden = false;
-        document.body.style.overflow = "hidden";
-        box.querySelector(".lightbox-close").focus();
-      }
-
-      function closeBox() {
-        box.hidden = true;
-        boxImg.src = "";
-        document.body.style.overflow = "";
-        if (lastFocus) lastFocus.focus();
-      }
-
-      document.querySelectorAll(".seal-btn").forEach((btn) => {
-        btn.addEventListener("click", () =>
-          openBox(btn.dataset.seal, btn.dataset.caption, btn)
-        );
-      });
-
-      box.querySelector(".lightbox-close").addEventListener("click", closeBox);
-      box.addEventListener("click", (e) => { if (e.target === box) closeBox(); });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !box.hidden) closeBox();
-      });
-    </script>
-  </body>
-</html>
+<style is:global>
+  /* Big seals in the credentials block. */
+  .co-creds-figure .seal-btn img { width: clamp(176px, 22vw, 260px); }
+</style>
