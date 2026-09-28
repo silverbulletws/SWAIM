@@ -6,7 +6,7 @@ import { site } from "../data/site.js";
 
 const surveying = [
   { name: "Oil and Gas Surveys", blurb: "Well locations, pad sites, pipeline routes, and lease boundaries." },
-  { name: "Land and Boundary Surveys", blurb: "Where your property actually ends — documented and defensible." },
+  { name: "Land and Boundary Surveys", blurb: "Improvement survey, title survey, legal description, partition survey — documented and defensible." },
   { name: "Mapping", blurb: "Topographic and planimetric mapping built for the work that follows." },
   { name: "Platting", blurb: "Subdivision plats prepared to city and county standards." },
   { name: "Right-of-Way Determination", blurb: "Easements and ROW research for roads, utilities, and pipelines." },
@@ -15,14 +15,17 @@ const surveying = [
 ];
 
 const engineering = [
-  { name: "Site Development", blurb: "Grading, layout, and utilities from raw dirt to a buildable pad." },
-  { name: "Roadway Design", blurb: "County roads, subdivision streets, and access drives." },
-  { name: "Water and Sewer Design", blurb: "Distribution, collection, and lift stations sized to the demand." },
-  { name: "Drainage Design", blurb: "Detention, culverts, and drainage studies that hold up to review." },
-  { name: "Feasibility Studies", blurb: "Find out what a site will cost you before you own the problem." },
+  { name: "Site Development", blurb: "Grading, layout, and utilities from raw land to a finished construction." },
+  { name: "Roadway Design", blurb: "County roads, subdivision streets, and access and TxDOT drives." },
+  { name: "Water and Sewer Design", blurb: "Distribution, collection, and lift stations." },
+  { name: "Drainage Design", blurb: "Detention, culverts, and drainage studies for proposed development." },
+  // TODO — Swaim wants this blurb rewritten; waiting on their copy.
+  // Remove `pendingCopy: true` (and the .needs-copy CSS at the bottom of
+  // this file) once the new wording lands. Do NOT go live with it set.
+  { name: "Feasibility Studies", blurb: "Find out what a site will cost you before you own the problem.", pendingCopy: true },
   { name: "Park and Trail Design", blurb: "Public space design for cities and civic projects." },
-  { name: "Construction Management", blurb: "Someone watching the build who read the plans first." },
-  { name: "Special Services and Scanning", blurb: "Document scanning, exhibits, and one-off technical work." },
+  { name: "Construction Management", blurb: "Our eyes on site and boots on the ground making sure what's in the plans gets built." },
+  { name: "Special Services and Scanning", blurb: "Document scanning, exhibits, and large format printing." },
 ];
 
 // Project cards. status: "page" | "pdf" | "soon"
@@ -80,12 +83,11 @@ const creds = [
     <div class="hero-inner">
       <p class="eyebrow">Bowie, Texas &nbsp;·&nbsp; 33.5590&deg; N, 97.8486&deg; W</p>
       <h1>
-        The engineer and the surveyor<br />
-        <em>work down the hall from each other.</em>
+        The engineer and the surveyor
       </h1>
       <p class="hero-sub">
-        Most projects need both. Most towns make you hire twice. We've kept a licensed
-        Professional Engineer and a Registered Professional Land Surveyor under the same roof
+        Most projects need both. We are a licensed
+        Professional Engineer, a Registered Professional Land Surveyor, and under the same roof
         in Montague County since {site.founded}.
       </p>
       <div class="hero-actions">
@@ -105,14 +107,11 @@ const creds = [
     <div class="thesis-copy">
       <p class="label">Why that matters</p>
       <p class="lede">
-        When your surveyor and your engineer are two different firms, you are the one carrying
-        drawings between them. Boundary comes back late. The grading plan gets drawn off the
-        wrong line. Somebody has to eat the change order.
+        Both engineer and surveyor professional services under one roof
       </p>
       <p>
-        Here, the boundary work and the design work happen in the same building, off the same
-        field data, checked by people who talk to each other before there's a problem. That's
-        not a sales pitch. It's just how the office is laid out.
+        Here, the boundary, topography, design, and staking happen in the same building, by
+        people who talk to each other. That's not a sales pitch. It's just how we do it.
       </p>
     </div>
     <figure class="thesis-figure">
@@ -125,7 +124,10 @@ const creds = [
   <section class="services" id="services">
     <div class="services-head">
       <h2>Two disciplines, one office</h2>
-      <p>Fifteen services. Call about any of them, or call and describe the problem — that works too.</p>
+      <p>
+        Give us a call. We can help as much or as little as you need &mdash; or just describe the
+        problem and we'll help you sort it out.
+      </p>
     </div>
 
     <div class="services-grid">
@@ -144,7 +146,7 @@ const creds = [
             {d.services.map((s) => (
               <li>
                 <span class="svc-name">{s.name}</span>
-                <span class="svc-blurb">{s.blurb}</span>
+                <span class:list={["svc-blurb", s.pendingCopy && "needs-copy"]}>{s.blurb}</span>
               </li>
             ))}
           </ul>
@@ -191,11 +193,10 @@ const creds = [
     <div class="roots-scrim"></div>
     <div class="roots-inner">
       <p class="label light">Montague County</p>
-      <h2>We've got the old soil survey on the desk, not in a box.</h2>
+      <h2>We've got three generations of records in our files.</h2>
       <p>
-        Over two decades of plats, field notes, and county records for this part of Texas — and the
-        institutional memory of who moved which fence and when. If your tract has a history,
-        there's a fair chance it's already in our files.
+        Decades of plats, field notes, and county records for this part of Texas. If your tract
+        has a history in this area, there's a fair chance it's already in our files.
       </p>
     </div>
   </section>
@@ -416,6 +417,30 @@ const creds = [
     letter-spacing: 0.01em;
   }
   .svc-blurb { font-size: 0.94rem; opacity: 0.7; line-height: 1.5; }
+
+  /* ---------- REVIEW MARKER — DELETE BEFORE LAUNCH ----------
+     Flags copy the client has asked to rewrite but hasn't supplied yet.
+     Set pendingCopy: true on a service in the frontmatter to apply it. */
+  .needs-copy {
+    position: relative;
+    display: block;
+    background: rgba(226, 87, 30, 0.1);
+    border-left: 3px solid var(--flag);
+    padding: 0.5rem 0.7rem 0.5rem 0.6rem;
+    margin-top: 0.2rem;
+    opacity: 1;
+  }
+  .needs-copy::after {
+    content: "New copy pending";
+    display: block;
+    margin-top: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--flag);
+  }
+  /* ---------- END REVIEW MARKER ---------- */
 
   /* ---------- work ---------- */
   .work { padding: clamp(4.5rem, 10vw, 8rem) var(--pad); }

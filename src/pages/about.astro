@@ -18,9 +18,8 @@ const team = [
   { name: "Wade Brown", role: "Oil and gas project manager", years: "23 years" },
   { name: "Jessica Curry", role: "Office manager, title research, survey preparation", years: "10 years" },
   { name: "Dillon Swaim", role: "Field crew", years: "9 years" },
-  { name: "Chandler Allison", role: "Field crew", years: "2 years" },
+  { name: "Jeffrey Howard", role: "Field crew", years: "2 years" },
   { name: "Vanessa Clark", role: "Office research and drafting", years: "1 year" },
-  { name: "Dane Williams", role: "Field crew", years: "1 year" },
 ];
 
 const creds = [
@@ -41,9 +40,9 @@ const creds = [
   <section class="co-intro">
     <div class="co-intro-copy">
       <p class="label">Since April 2003</p>
-      <h1>A Bowie firm, run by the man who signs the drawings</h1>
+      <h1>A Bowie firm<br class="wide-only" />in Montague County</h1>
       <p class="co-lede">
-        Jason Swaim opened the office on North Mason in April of 2003 after ten years with Halff
+        Jason Swaim opened the office on North Mason in April of 2003 after 13 years with Halff
         Associates. He holds both a Professional Engineer license and a Registered Professional
         Land Surveyor license in Texas — the same two seals you see at the bottom of our
         drawings, and the reason a project doesn't have to be handed between two firms.
@@ -179,6 +178,11 @@ const creds = [
   }
   .co-intro-copy { align-self: start; }
   .co-intro h1 { font-size: clamp(2.1rem, 4.8vw, 3.4rem); text-transform: uppercase; }
+
+  /* Forced break only where there's room for it; on a phone the
+     headline wraps on its own and a hard break adds a third line. */
+  .wide-only { display: none; }
+  @media (min-width: 700px) { .wide-only { display: inline; } }
   .co-lede { margin: 1.5rem 0 0; opacity: 0.8; max-width: 36rem; }
   .co-intro-figure { margin: 0; }
   .co-intro-figure img { width: 100%; height: auto; display: block; }
