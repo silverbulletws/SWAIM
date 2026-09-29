@@ -5,10 +5,16 @@ export const site = {
   name: "Swaim Engineering and Surveying",
   shortName: "Swaim",
 
+  // The live domain. Used for the sitemap.
+  // Leave this alone — it's correct once the domain points at Cloudflare.
+  // Before then, builds automatically fall back to the .pages.dev URL,
+  // so you don't have to touch anything at launch.
+  url: "https://swaimengineering.com",
+
   phone: "940-872-5075",
   phoneHref: "tel:+19408725075",
-  email: "info@swaimengineering.com",
-  emailHref: "mailto:info@swaimengineering.com",
+  email: "jswaim@swaimengineering.com",
+  emailHref: "mailto:jswaim@swaimengineering.com",
 
   street: "506 North Mason",
   cityStateZip: "Bowie, TX 76230",
@@ -17,6 +23,10 @@ export const site = {
 
   hours: "Monday–Friday, 8:00–5:00",
   founded: 2003,
+
+  // Default social-share image. Used for Open Graph and Twitter cards
+  // on any page that doesn't set its own. Should be 1200x630.
+  ogImage: "/assets/og-default.jpg",
 
   // TODO: replace with Swaim's real Facebook page when it exists.
   facebookHref: "https://www.facebook.com/",
