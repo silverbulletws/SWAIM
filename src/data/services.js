@@ -77,23 +77,19 @@ export const engineeringServices = [
   {
     name: "Water and Sewer Design",
     short: "Distribution, collection, and lift stations.",
-    long: "Distribution mains, collection systems, and lift stations sized to the demand you'll actually have.",
+    long: "Distribution mains, collection systems, and lift stations sized to the demands you'll actually have.",
     when: "Extending service to a new development or fixing a system that's outgrown itself.",
   },
   {
-    // TODO — Swaim wants this rewritten; waiting on his copy.
-    // Remove `pendingCopy: true` (and the .needs-copy CSS in index.astro)
-    // once the new wording lands. Do NOT go live with it set.
     name: "Feasibility Studies",
-    short: "Find out what a site will cost you before you own the problem.",
-    long: "What a site will cost to develop, found out before you own the problem instead of after.",
+    short: "What a site will cost to develop, in time for budgeting and planning.",
+    long: "What a site will cost to develop, found out in time for budgeting and planning priorities.",
     when: "Before you close on a tract, or before the board votes on it.",
-    pendingCopy: true,
   },
   {
     name: "Construction Management",
     short: "Our eyes on site and boots on the ground making sure what's in the plans gets built.",
-    long: "Somebody watching the build who read the plans first — and who can answer a contractor's question without a three-day delay.",
+    long: "Somebody watching the construction who drew the plans — and who can answer a contractor's question without delay.",
     when: "Once construction starts and the questions begin.",
   },
   {
@@ -105,7 +101,7 @@ export const engineeringServices = [
   {
     name: "Special Services and Scanning",
     short: "Document scanning, exhibits, and large format printing.",
-    long: "Document scanning, exhibits, and the one-off technical work that doesn't fit a category.",
-    when: "When you need something drawn, sealed, or digitized and nobody else will touch it.",
+    long: "Document scanning, exhibits, and large format printing.",
+    when: "When you need something drawn, sealed, digitized or printed and nobody else can do it.",
   },
 ];
