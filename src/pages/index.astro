@@ -3,30 +3,8 @@
 import Base from "../layouts/Base.astro";
 import Seal from "../components/Seal.astro";
 import { site } from "../data/site.js";
+import { surveyingServices, engineeringServices } from "../data/services.js";
 
-const surveying = [
-  { name: "Oil and Gas Surveys", blurb: "Well locations, pad sites, pipeline routes, and lease boundaries." },
-  { name: "Land and Boundary Surveys", blurb: "Improvement survey, title survey, legal description, partition survey — documented and defensible." },
-  { name: "Mapping", blurb: "Topographic and planimetric mapping built for the work that follows." },
-  { name: "Platting", blurb: "Subdivision plats prepared to city and county standards." },
-  { name: "Right-of-Way Determination", blurb: "Easements and ROW research for roads, utilities, and pipelines." },
-  { name: "Construction Staking", blurb: "Grade, offset, and layout staking so crews build to the plan." },
-  { name: "GPS Surveying", blurb: "RTK and static control for large tracts and remote sites." },
-];
-
-const engineering = [
-  { name: "Site Development", blurb: "Grading, layout, and utilities from raw land to a finished construction." },
-  { name: "Roadway Design", blurb: "County roads, subdivision streets, and access and TxDOT drives." },
-  { name: "Water and Sewer Design", blurb: "Distribution, collection, and lift stations." },
-  { name: "Drainage Design", blurb: "Detention, culverts, and drainage studies for proposed development." },
-  // TODO — Swaim wants this blurb rewritten; waiting on their copy.
-  // Remove `pendingCopy: true` (and the .needs-copy CSS at the bottom of
-  // this file) once the new wording lands. Do NOT go live with it set.
-  { name: "Feasibility Studies", blurb: "Find out what a site will cost you before you own the problem.", pendingCopy: true },
-  { name: "Park and Trail Design", blurb: "Public space design for cities and civic projects." },
-  { name: "Construction Management", blurb: "Our eyes on site and boots on the ground making sure what's in the plans gets built." },
-  { name: "Special Services and Scanning", blurb: "Document scanning, exhibits, and large format printing." },
-];
 
 // Project cards. status: "page" | "pdf" | "soon"
 const projects = [
@@ -50,7 +28,7 @@ const creds = [
     abbr: "RPLS",
     title: "Registered Professional Land Surveyor",
     body: "A state-licensed surveyor authorized to determine land boundaries, write legal property descriptions, and prepare the surveys used in land transactions. Licensure requires education, documented field experience, state board examinations, and ongoing continuing education.",
-    services: surveying,
+    services: surveyingServices,
     heading: "Surveying",
   },
   {
@@ -58,7 +36,7 @@ const creds = [
     abbr: "P.E.",
     title: "Professional Engineer",
     body: "A state-licensed engineer authorized to design, seal, and take responsibility for engineering work under established technical and safety standards. Licensure requires an accredited degree, documented experience, state board examinations, and ongoing continuing education.",
-    services: engineering,
+    services: engineeringServices,
     heading: "Engineering",
   },
 ];
@@ -146,7 +124,7 @@ const creds = [
             {d.services.map((s) => (
               <li>
                 <span class="svc-name">{s.name}</span>
-                <span class:list={["svc-blurb", s.pendingCopy && "needs-copy"]}>{s.blurb}</span>
+                <span class:list={["svc-blurb", s.pendingCopy && "needs-copy"]}>{s.short}</span>
               </li>
             ))}
           </ul>

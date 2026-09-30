@@ -31,6 +31,7 @@
 .svc-list-wrap { background: #fff; padding: clamp(4rem, 10vw, 7rem) var(--pad); }
 .svc-list-head { margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
 .svc-list-head h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); text-transform: uppercase; }
+.svc-list-head p:not(.label) { margin: 1rem 0 0; opacity: 0.75; max-width: 42rem; }
 
 .svc-list {
   display: grid;

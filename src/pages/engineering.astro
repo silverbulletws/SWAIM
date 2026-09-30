@@ -3,50 +3,9 @@
 import Base from "../layouts/Base.astro";
 import Seal from "../components/Seal.astro";
 import { site, counties } from "../data/site.js";
+import { engineeringServices as services } from "../data/services.js";
 import "../styles/service-page.css";
 
-const services = [
-  {
-    name: "Site Development",
-    blurb: "Grading, layout, and utilities that turn raw dirt into a buildable pad — designed against the survey rather than around it.",
-    when: "Any commercial build, storage facility, or subdivision starting from bare ground.",
-  },
-  {
-    name: "Drainage Design",
-    blurb: "Detention, culverts, and drainage studies built to survive the reviewer, not just the rainfall.",
-    when: "When the city won't approve a plat until somebody proves where the water goes.",
-  },
-  {
-    name: "Roadway Design",
-    blurb: "County roads, subdivision streets, and access drives, from centerline geometry through drainage and paving sections.",
-    when: "New streets in a development, or a county road that needs rebuilding.",
-  },
-  {
-    name: "Water and Sewer Design",
-    blurb: "Distribution mains, collection systems, and lift stations sized to the demand you'll actually have.",
-    when: "Extending service to a new development or fixing a system that's outgrown itself.",
-  },
-  {
-    name: "Feasibility Studies",
-    blurb: "What a site will cost to develop, found out before you own the problem instead of after.",
-    when: "Before you close on a tract, or before the board votes on it.",
-  },
-  {
-    name: "Construction Management",
-    blurb: "Somebody watching the build who read the plans first — and who can answer a contractor's question without a three-day delay.",
-    when: "Once construction starts and the questions begin.",
-  },
-  {
-    name: "Park and Trail Design",
-    blurb: "Public space design for cities and civic projects, from layout through construction documents.",
-    when: "Municipal park improvements, trail connections, and grant-funded civic work.",
-  },
-  {
-    name: "Special Services and Scanning",
-    blurb: "Document scanning, exhibits, and the one-off technical work that doesn't fit a category.",
-    when: "When you need something drawn, sealed, or digitized and nobody else will touch it.",
-  },
-];
 
 const plans = [
   { name: "Kingdom Ridge", kind: "Site plan", file: "/assets/site-plan-kingdom-ridge.pdf" },
@@ -64,11 +23,11 @@ const plans = [
   <section class="svc-intro">
     <div class="svc-intro-copy">
       <p class="label">Engineering &nbsp;·&nbsp; P.E. 84832</p>
-      <h1>Designed off our own survey</h1>
+      <h1>Designed in-house using our topo survey</h1>
       <p class="svc-lede">
         Most civil engineering starts with somebody else's boundary work and a hope that it's
-        right. Ours starts with field data collected down the hall, which means the grading plan
-        and the plat agree with each other before either one leaves the building.
+        right. Ours starts with field data collected by us, which means the survey and the plans
+        agree with each other before either one leaves the building.
       </p>
       <div class="svc-actions">
         <a class="btn-primary" href="/start">Start a project</a>
@@ -84,14 +43,15 @@ const plans = [
   <section class="svc-list-wrap">
     <div class="svc-list-head">
       <p class="label">What we do</p>
-      <h2>Eight kinds of engineering work</h2>
+      <h2>Some of our services</h2>
+      <p>If you don't see it here, ask. We have partners for most everything you will need.</p>
     </div>
 
     <div class="svc-list">
       {services.map((s) => (
         <article class="svc-item">
           <h3>{s.name}</h3>
-          <p class="svc-blurb">{s.blurb}</p>
+          <p class="svc-blurb">{s.long}</p>
           <p class="svc-when"><span class="mono">When you need it</span>{s.when}</p>
         </article>
       ))}
