@@ -1,7 +1,8 @@
 ---
 // src/components/Lightbox.astro
 // Markup + behaviour for the seal lightbox. Styles live in global.css.
-// Wires itself to every .seal-btn on the page automatically.
+// Wires itself to every element carrying data-seal + data-caption,
+// so seals, plan sheets and photos all use the same one.
 ---
 <div class="lightbox" id="lightbox" hidden>
   <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
@@ -35,7 +36,7 @@
       if (lastFocus) lastFocus.focus();
     };
 
-    document.querySelectorAll(".seal-btn").forEach((btn) => {
+    document.querySelectorAll("[data-seal]").forEach((btn) => {
       btn.addEventListener("click", () =>
         openBox(btn.dataset.seal, btn.dataset.caption, btn)
       );

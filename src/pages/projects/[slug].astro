@@ -1,0 +1,387 @@
+---
+// src/pages/projects/[slug].astro
+//
+// ONE template for every project page. Astro generates a page per
+// published entry in src/data/projects.js — no per-project file.
+//
+// Every section below is conditional, so a project with only a name
+// and a location still renders a clean page.
+//
+// LAYOUT
+//   Title
+//   Facts + Summary (left)  |  Hero image (right)
+//   Story (left)            |  Plan sheets (right)
+//   Gallery — full width
+//   Services
+//   CTA
+
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { site } from "../../data/site.js";
+import { publishedProjects } from "../../data/projects.js";
+
+export function getStaticPaths() {
+  return publishedProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const facts = [
+  project.client && { label: "Client", value: project.client },
+  project.date && { label: "Project date", value: project.date },
+  project.location && { label: "Location", value: project.location },
+  project.scope && { label: "Scope", value: project.scope },
+  project.legal && { label: "Legal description", value: project.legal },
+].filter(Boolean);
+
+const meta = [project.discipline, project.location].filter(Boolean);
+const hasPlans = project.plans?.length > 0;
+---
+
+<Base
+  title={`${project.name} — Swaim Engineering and Surveying`}
+  description={project.summary
+    ? project.summary.slice(0, 155)
+    : `${project.name} — a project by Swaim Engineering and Surveying.`}
+  ogImage={project.ogImage || project.hero}
+  ogType="article"
+>
+  <!-- ============ TITLE ============ -->
+  <section class="proj-title">
+    <a class="crumb mono" href="/projects">&larr; All projects</a>
+    <h1>{project.name}</h1>
+    <p class="proj-meta mono">
+      {meta.map((m, i) => (
+        <>
+          {i > 0 && <span class="dot">&middot;</span>}
+          {m}
+        </>
+      ))}
+      {project.status && (
+        <span class="proj-status">{project.status}</span>
+      )}
+    </p>
+  </section>
+
+  <!-- ============ FACTS + SUMMARY | HERO ============ -->
+  <section class="proj-body">
+    <div class="proj-col">
+      {facts.length > 0 && (
+        <dl class="proj-facts">
+          {facts.map((f) => (
+            <div class="fact">
+              <dt class="fact-label mono">{f.label}</dt>
+              <dd class="fact-value">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      {project.summary && (
+        <div class="proj-summary">
+          <p class="fact-label mono">Summary</p>
+          <p class="summary-text">{project.summary}</p>
+        </div>
+      )}
+
+      {project.downloads?.map((d) => (
+        <a class="fact-pdf" href={d.file} target="_blank" rel="noopener">
+          <Icon name="pdf" />
+          <span>{d.label}{d.size && ` (${d.size})`}</span>
+        </a>
+      ))}
+    </div>
+
+    {project.hero && (
+      <figure class="proj-hero">
+        <button
+          class="zoom"
+          type="button"
+          data-seal={project.hero}
+          data-caption={`${project.name} — ${project.location || "site"}`}
+        >
+          <img src={project.hero} alt={`${project.name} site`} />
+        </button>
+        <figcaption class="mono">Click to enlarge</figcaption>
+      </figure>
+    )}
+  </section>
+
+  <!-- ============ STORY | PLANS ============ -->
+  {(project.story || hasPlans) && (
+    <section class="proj-story">
+      <div class="proj-story-copy">
+        {project.story && (
+          <>
+            <p class="label light">On this one</p>
+            {project.storyTitle && <h2>{project.storyTitle}</h2>}
+            <p class="story-text">{project.story}</p>
+          </>
+        )}
+      </div>
+
+      {hasPlans && (
+        <div class="proj-plans">
+          {project.plans.map((pl) => (
+            <figure>
+              <button class="zoom" type="button" data-seal={pl.src} data-caption={pl.caption || pl.alt}>
+                <img src={pl.src} alt={pl.alt} loading="lazy" />
+              </button>
+              <figcaption class="mono">{pl.caption ? `${pl.caption} — click to enlarge` : "Click to enlarge"}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </section>
+  )}
+
+  <!-- ============ GALLERY ============ -->
+  {project.gallery?.length > 0 && (
+    <section class="proj-gallery">
+      <p class="label">From the site</p>
+      <div class="gallery-grid">
+        {project.gallery.map((g) => (
+          <figure>
+            <button class="zoom" type="button" data-seal={g.src} data-caption={g.caption || g.alt}>
+              <img src={g.src} alt={g.alt} loading="lazy" />
+            </button>
+            {g.caption && <figcaption class="mono">{g.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- ============ SERVICES ============ -->
+  {project.services?.length > 0 && (
+    <section class="proj-services">
+      <p class="label">What we did</p>
+      <ul class="svc-chips">
+        {project.services.map((s) => <li>{s}</li>)}
+      </ul>
+      <div class="svc-links">
+        <a class="text-link" href="/surveying">Surveying services &rarr;</a>
+        <a class="text-link" href="/engineering">Engineering services &rarr;</a>
+      </div>
+    </section>
+  )}
+
+  <!-- ============ CTA ============ -->
+  <section class="proj-cta">
+    <h2>Got something like this?</h2>
+    <p>Give the project a name and we'll pick it up from there. Or just call the office.</p>
+    <div class="proj-cta-actions">
+      <a class="btn-primary" href="/start">Start a project</a>
+      <a class="btn-ghost-light" href={site.phoneHref}>{site.phone}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- title ---------- */
+  .proj-title { padding: clamp(2.5rem, 6vw, 4.5rem) var(--pad) clamp(2rem, 4vw, 3rem); }
+  .crumb {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--blue);
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+  }
+  .crumb:hover { color: var(--flag); }
+  .proj-title h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); text-transform: uppercase; }
+  .proj-meta {
+    margin: 1.25rem 0 0;
+    opacity: 0.6;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .proj-meta .dot { color: var(--flag); }
+  .proj-status {
+    border: 1px solid var(--hair-ink-2);
+    padding: 0.25rem 0.6rem;
+    margin-left: 0.5rem;
+    opacity: 0.9;
+  }
+
+  /* ---------- facts + summary | hero ---------- */
+  .proj-body {
+    display: grid;
+    grid-template-columns: 24rem 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    padding: clamp(2rem, 4vw, 3rem) var(--pad) clamp(3.5rem, 8vw, 6rem);
+    align-items: start;
+  }
+  .proj-col { display: grid; gap: 2rem; align-content: start; }
+
+  .proj-facts { margin: 0; display: grid; gap: 1.35rem; }
+  .fact { display: grid; gap: 0.25rem; }
+  .fact-label { color: var(--blue); margin: 0; font-size: 0.66rem; letter-spacing: 0.14em; }
+  .fact-value { margin: 0; font-size: 0.98rem; }
+
+  .proj-summary { border-top: 1px solid var(--hair-ink); padding-top: 1.5rem; }
+  .summary-text { margin: 0.6rem 0 0; font-size: 0.98rem; opacity: 0.8; line-height: 1.6; }
+
+  .fact-pdf {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--hair-ink-2);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .fact-pdf svg {
+    width: 17px; height: 17px; flex: none;
+    fill: none; stroke: currentColor; stroke-width: 1.6;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .fact-pdf:hover { background: var(--ink); border-color: var(--ink); color: var(--buff); }
+
+  /* Click-to-enlarge wrapper, used on the hero, plans and gallery. */
+  .zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    line-height: 0;
+  }
+  .zoom img { transition: opacity 0.2s; }
+  .zoom:hover img { opacity: 0.88; }
+
+  /* Whole aerial, no crop. Size is controlled by the grid column
+     width in .proj-body, so the figure always fills its cell and
+     never leaves a gap beside it. */
+  /* ===== HERO SIZE — the only number to change =====
+     This is the image width in PLAIN PIXELS. 640px means 640 pixels
+     wide on screen. Bigger number = bigger image.
+     The image is pinned right, so shrinking it opens space in the
+     middle rather than leaving a gap on the right edge. */
+  .proj-hero {
+    margin: 0;
+    justify-self: end;
+    width: 100%;
+    max-width: 800px;
+  }
+  .proj-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid rgba(14, 31, 42, 0.16);
+    background: var(--buff);
+  }
+  .proj-hero figcaption { margin-top: 0.6rem; opacity: 0.45; font-size: 0.64rem; }
+  @media (max-width: 900px) { .proj-body { grid-template-columns: 1fr; } }
+
+  /* ---------- story | plans ---------- */
+  .proj-story {
+    background: var(--ink);
+    color: var(--buff);
+    display: grid;
+    grid-template-columns: 0.85fr 1.5fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding: clamp(4rem, 9vw, 6.5rem) var(--pad);
+  }
+  .proj-story-copy { max-width: 34rem; }
+  .proj-story h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .story-text { margin: 0; opacity: 0.82; }
+
+  .proj-plans { display: grid; gap: 2rem; }
+  .proj-plans figure { margin: 0; }
+  .proj-plans img {
+    width: 100%;
+    display: block;
+    background: #fff;
+    border: 1px solid var(--hair);
+    padding: 0.5rem;
+  }
+  .proj-plans figcaption { margin-top: 0.8rem; opacity: 0.6; }
+  @media (max-width: 900px) { .proj-story { grid-template-columns: 1fr; } }
+
+  /* ---------- gallery ---------- */
+  .proj-gallery { padding: clamp(3.5rem, 8vw, 6rem) var(--pad); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+  .gallery-grid figure { margin: 0; }
+  .gallery-grid img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border: 1px solid rgba(14, 31, 42, 0.16);
+  }
+  .gallery-grid figcaption { margin-top: 0.7rem; opacity: 0.55; font-size: 0.66rem; }
+
+  /* ---------- plans ---------- */
+  .proj-plans {
+    background: var(--ink);
+    color: var(--buff);
+    padding: clamp(3.5rem, 8vw, 6rem) var(--pad);
+  }
+  .plans-stack { display: grid; gap: clamp(2rem, 4vw, 3rem); }
+  .plans-stack figure { margin: 0; }
+  .plans-stack img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #fff;
+    border: 1px solid var(--hair);
+  }
+  .plans-stack figcaption { margin-top: 0.8rem; opacity: 0.6; }
+
+  /* ---------- services ---------- */
+  .proj-services { background: var(--buff); padding: clamp(3.5rem, 8vw, 5.5rem) var(--pad); }
+  .svc-chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .svc-chips li {
+    border: 1px solid var(--hair-ink-2);
+    padding: 0.55rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .svc-chips li:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--buff);
+  }
+  .svc-links { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
+
+  /* ---------- cta ---------- */
+  .proj-cta {
+    background: var(--ink);
+    color: var(--buff);
+    padding: clamp(4rem, 9vw, 6.5rem) var(--pad);
+    text-align: center;
+  }
+  .proj-cta h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); text-transform: uppercase; }
+  .proj-cta > p { margin: 1.25rem auto 2rem; opacity: 0.78; max-width: 30rem; }
+  .proj-cta-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+</style>

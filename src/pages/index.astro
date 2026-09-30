@@ -4,23 +4,9 @@ import Base from "../layouts/Base.astro";
 import Seal from "../components/Seal.astro";
 import { site } from "../data/site.js";
 import { surveyingServices, engineeringServices } from "../data/services.js";
+import { featuredProjects } from "../data/projects.js";
 
 
-// Project cards. status: "page" | "pdf" | "soon"
-const projects = [
-  { kind: "Site plan", name: "Kingdom Ridge", status: "page", href: "/projects/kingdom-ridge" },
-  { kind: "Site plan", name: "Crown Point", status: "pdf", href: "/assets/site-plan-crown-point.pdf" },
-  { kind: "Site plan", name: "United Storage", status: "soon" },
-  { kind: "Sketch", name: "Access Road", status: "soon" },
-  { kind: "Site plan", name: "Project 5", status: "soon" },
-  { kind: "Site plan", name: "Project 6", status: "soon" },
-  { kind: "Site plan", name: "Project 7", status: "soon" },
-  { kind: "Site plan", name: "Project 8", status: "soon" },
-  { kind: "Site plan", name: "Project 9", status: "soon" },
-  { kind: "Site plan", name: "Project 10", status: "soon" },
-  { kind: "Site plan", name: "Project 11", status: "soon" },
-  { kind: "Site plan", name: "Project 12", status: "soon" },
-];
 
 const creds = [
   {
@@ -138,28 +124,22 @@ const creds = [
     <div class="work-head">
       <p class="label">Recent sets</p>
       <h2>Plans that got built</h2>
+      <a class="text-link work-all" href="/projects">See all projects &rarr;</a>
     </div>
     <div class="work-grid">
-      {projects.map((p) =>
-        p.status === "soon" ? (
+      {featuredProjects.map((p) =>
+        p.published ? (
+          <a class="work-card" href={`/projects/${p.slug}`}>
+            <span class="work-kind">{p.discipline}</span>
+            <span class="work-name">{p.name}</span>
+            <span class="work-open">View project &rarr;</span>
+          </a>
+        ) : (
           <span class="work-card is-soon">
-            <span class="work-kind">{p.kind}</span>
+            <span class="work-kind">{p.discipline}</span>
             <span class="work-name">{p.name}</span>
             <span class="work-open">Coming soon</span>
           </span>
-        ) : (
-          <a
-            class="work-card"
-            href={p.href}
-            target={p.status === "pdf" ? "_blank" : undefined}
-            rel={p.status === "pdf" ? "noopener" : undefined}
-          >
-            <span class="work-kind">{p.kind}</span>
-            <span class="work-name">{p.name}</span>
-            <span class="work-open">
-              {p.status === "pdf" ? "Open PDF →" : "Go to project page →"}
-            </span>
-          </a>
         )
       )}
     </div>
@@ -400,6 +380,7 @@ const creds = [
   /* ---------- work ---------- */
   .work { padding: clamp(4.5rem, 10vw, 8rem) var(--pad); }
   .work-head { margin-bottom: 2.5rem; }
+  .work-all { display: inline-block; margin-top: 1rem; }
   .work-head h2 { font-size: clamp(1.8rem, 3.8vw, 2.6rem); text-transform: uppercase; }
 
   .work-grid {

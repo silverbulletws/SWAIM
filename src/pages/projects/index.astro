@@ -1,0 +1,131 @@
+---
+// src/pages/projects/index.astro
+import Base from "../../layouts/Base.astro";
+import { site } from "../../data/site.js";
+import { projects } from "../../data/projects.js";
+---
+
+<Base
+  title="Projects — Swaim Engineering and Surveying"
+  description="Civil engineering and land surveying projects across North Texas by Swaim Engineering and Surveying, Bowie, Texas."
+>
+  <section class="idx-intro">
+    <p class="label">Our work</p>
+    <h1>Projects</h1>
+    <p class="idx-lede">
+      Sites we've surveyed, designed, and watched get built across North Texas.
+      More going up here as they come out of the office.
+    </p>
+  </section>
+
+  <section class="idx-grid-wrap">
+    <div class="idx-grid">
+      {projects.map((p) =>
+        p.published ? (
+          <a class="idx-card" href={`/projects/${p.slug}`}>
+            {p.hero && (
+              <span class="idx-thumb">
+                <img src={p.hero} alt={p.name} loading="lazy" />
+              </span>
+            )}
+            <span class="idx-body">
+              <span class="idx-kind mono">{p.discipline}</span>
+              <span class="idx-name">{p.name}</span>
+              {p.location && <span class="idx-loc">{p.location}</span>}
+              <span class="idx-go mono">View project &rarr;</span>
+            </span>
+          </a>
+        ) : (
+          <span class="idx-card is-soon">
+            <span class="idx-thumb idx-thumb-empty"></span>
+            <span class="idx-body">
+              <span class="idx-kind mono">{p.discipline}</span>
+              <span class="idx-name">{p.name}</span>
+              {p.location && <span class="idx-loc">{p.location}</span>}
+              <span class="idx-go mono">Coming soon</span>
+            </span>
+          </span>
+        )
+      )}
+    </div>
+  </section>
+
+  <section class="idx-cta">
+    <h2>Got something like this?</h2>
+    <p>Give the project a name and we'll pick it up from there. Or just call the office.</p>
+    <div class="idx-cta-actions">
+      <a class="btn-primary" href="/start">Start a project</a>
+      <a class="btn-ghost-light" href={site.phoneHref}>{site.phone}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .idx-intro {
+    padding: clamp(3rem, 7vw, 5rem) var(--pad) clamp(2rem, 4vw, 3rem);
+    max-width: 46rem;
+  }
+  .idx-intro h1 { font-size: clamp(2.4rem, 6vw, 4rem); text-transform: uppercase; }
+  .idx-lede { margin: 1.5rem 0 0; opacity: 0.78; }
+
+  .idx-grid-wrap { padding: 0 var(--pad) clamp(4rem, 9vw, 6.5rem); }
+  .idx-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .idx-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    text-decoration: none;
+    border: 1px solid var(--hair-ink);
+    background: #fff;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  a.idx-card:hover { border-color: var(--ink); transform: translateY(-3px); }
+
+  .idx-thumb { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--buff); }
+  .idx-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .idx-thumb-empty {
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(14, 31, 42, 0.04) 0 10px,
+        rgba(14, 31, 42, 0.07) 10px 20px
+      );
+  }
+
+  .idx-body { display: grid; gap: 0.4rem; align-content: start; padding: 1.5rem 1.5rem 1.65rem; }
+  .idx-kind {
+    color: var(--blue);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+  }
+  .idx-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.35rem;
+    text-transform: uppercase;
+  }
+  .idx-loc { font-size: 0.92rem; opacity: 0.65; }
+  .idx-go {
+    margin-top: 0.85rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    opacity: 0.55;
+  }
+  a.idx-card:hover .idx-go { opacity: 1; color: var(--flag); }
+
+  .is-soon { opacity: 0.55; cursor: default; }
+
+  .idx-cta {
+    background: var(--ink);
+    color: var(--buff);
+    padding: clamp(4rem, 9vw, 6.5rem) var(--pad);
+    text-align: center;
+  }
+  .idx-cta h2 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); text-transform: uppercase; }
+  .idx-cta > p { margin: 1.25rem auto 2rem; opacity: 0.78; max-width: 30rem; }
+  .idx-cta-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+</style>
