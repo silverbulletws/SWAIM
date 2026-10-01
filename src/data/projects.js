@@ -81,12 +81,22 @@ export const projects = [
       },
     ],
 
+    // First entry is the feature sheet shown large beside the story.
+    // Everything after it becomes the thumbnail index below.
     plans: [
       {
         src: "/projects/adobe-interiors/plan-c6.webp",
         alt: "Sheet C6.0, water and sewer plan for Adobe Interiors",
         caption: "Sheet C6.0 — Water and Sewer Plan",
       },
+      // TODO — replace these captions with the real sheet numbers
+      // and titles off each drawing's title block.
+      { src: "/projects/adobe-interiors/adobe-ifc-p03.webp", alt: "Adobe Interiors plan sheet", caption: "Plan sheet" },
+      { src: "/projects/adobe-interiors/adobe-ifc-p04.webp", alt: "Adobe Interiors plan sheet", caption: "Plan sheet" },
+      { src: "/projects/adobe-interiors/adobe-ifc-p05.webp", alt: "Adobe Interiors plan sheet", caption: "Plan sheet" },
+      { src: "/projects/adobe-interiors/adobe-ifc-p06.webp", alt: "Adobe Interiors plan sheet", caption: "Plan sheet" },
+      { src: "/projects/adobe-interiors/adobe-ifc-p07.webp", alt: "Adobe Interiors plan sheet", caption: "Plan sheet" },
+      { src: "/projects/adobe-interiors/adobe-ifc-p08.webp", alt: "Adobe Interiors plan sheet", caption: "Plan sheet" },
     ],
 
     // TODO — decide with Jason which sheets can be published.

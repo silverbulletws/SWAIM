@@ -39,6 +39,8 @@ const facts = [
 
 const meta = [project.discipline, project.location].filter(Boolean);
 const hasPlans = project.plans?.length > 0;
+const featurePlan = hasPlans ? project.plans[0] : null;
+const otherPlans = hasPlans ? project.plans.slice(1) : [];
 ---
 
 <Base
@@ -123,18 +125,34 @@ const hasPlans = project.plans?.length > 0;
         )}
       </div>
 
-      {hasPlans && (
+      {featurePlan && (
         <div class="proj-plans">
-          {project.plans.map((pl) => (
-            <figure>
-              <button class="zoom" type="button" data-seal={pl.src} data-caption={pl.caption || pl.alt}>
-                <img src={pl.src} alt={pl.alt} loading="lazy" />
-              </button>
-              <figcaption class="mono">{pl.caption ? `${pl.caption} — click to enlarge` : "Click to enlarge"}</figcaption>
-            </figure>
-          ))}
+          <figure>
+            <button class="zoom" type="button" data-seal={featurePlan.src} data-caption={featurePlan.caption || featurePlan.alt}>
+              <img src={featurePlan.src} alt={featurePlan.alt} loading="lazy" />
+            </button>
+            <figcaption class="mono">
+              {featurePlan.caption ? `${featurePlan.caption} — click to enlarge` : "Click to enlarge"}
+            </figcaption>
+          </figure>
         </div>
       )}
+    </section>
+  )}
+
+  <!-- ============ SHEET INDEX ============ -->
+  {otherPlans.length > 0 && (
+    <section class="proj-sheets">
+      <p class="label light">More from the set</p>
+      <div class="sheet-grid">
+        {otherPlans.map((pl) => (
+          <button class="sheet" type="button" data-seal={pl.src} data-caption={pl.caption || pl.alt}>
+            <img src={pl.src} alt={pl.alt} loading="lazy" />
+            {pl.caption && <span class="sheet-cap mono">{pl.caption}</span>}
+          </button>
+        ))}
+      </div>
+      <p class="sheet-note mono">Click any sheet to enlarge</p>
     </section>
   )}
 
@@ -313,6 +331,43 @@ const hasPlans = project.plans?.length > 0;
   }
   .proj-plans figcaption { margin-top: 0.8rem; opacity: 0.6; }
   @media (max-width: 900px) { .proj-story { grid-template-columns: 1fr; } }
+
+  /* ---------- sheet index ---------- */
+  .proj-sheets {
+    background: var(--ink);
+    color: var(--buff);
+    padding: 0 var(--pad) clamp(4rem, 9vw, 6.5rem);
+    margin-top: calc(clamp(4rem, 9vw, 6.5rem) * -1);
+  }
+  .sheet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1.25rem;
+  }
+  .sheet {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    text-align: left;
+    color: inherit;
+  }
+  .sheet img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: top left;
+    display: block;
+    background: #fff;
+    border: 1px solid var(--hair);
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+  .sheet:hover img { border-color: var(--flag); opacity: 0.92; }
+  .sheet-cap { font-size: 0.64rem; opacity: 0.55; line-height: 1.4; }
+  .sheet:hover .sheet-cap { opacity: 0.9; }
+  .sheet-note { margin: 1.75rem 0 0; opacity: 0.4; font-size: 0.64rem; }
 
   /* ---------- gallery ---------- */
   .proj-gallery { padding: clamp(3.5rem, 8vw, 6rem) var(--pad); }
