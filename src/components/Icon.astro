@@ -1,7 +1,7 @@
 ---
 // src/components/Icon.astro
 // Inline SVG icons. No library, no extra request, inherits currentColor.
-interface Props { name: "map" | "phone" | "mail" | "facebook" | "linkedin" | "pdf"; }
+interface Props { name: "map" | "phone" | "mail" | "facebook" | "linkedin" | "pdf" | "menu" | "close"; }
 const { name } = Astro.props;
 ---
 {name === "map" && (
@@ -21,4 +21,10 @@ const { name } = Astro.props;
 )}
 {name === "pdf" && (
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 7 21h10a1.5 1.5 0 0 0 1.5-1.5V7.5z"/><path d="M14 3v4.5h4.5"/></svg>
+)}
+{name === "menu" && (
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7h17M3.5 12h17M3.5 17h17"/></svg>
+)}
+{name === "close" && (
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"/></svg>
 )}

@@ -3,6 +3,10 @@
 // variant "solid"   — dark bar at the top of the page (default)
 // variant "overlay" — transparent, floats over the homepage hero
 // variant "minimal" — logo + back link only, used on /start
+//
+// Desktop: nav links + boxed phone number.
+// Mobile:  phone icon + hamburger, both borderless. The hamburger
+//          opens a drop-down panel with the nav links.
 import { site } from "../data/site.js";
 import Icon from "./Icon.astro";
 
@@ -18,18 +22,63 @@ const { variant = "solid" } = Astro.props;
   {variant === "minimal" ? (
     <a class="back-link mono" href="/">&larr; Back to home</a>
   ) : (
-    <nav class="nav">
-      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
-      <a class="nav-phone" href={site.phoneHref}>{site.phone}</a>
-      <a
-        class="nav-social"
-        href={site.facebookHref}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${site.name} on Facebook`}
-      >
-        <Icon name="facebook" />
-      </a>
-    </nav>
+    <>
+      <nav class="nav">
+        {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+
+        <a class="nav-phone" href={site.phoneHref} aria-label={`Call ${site.phone}`}>
+          <span class="nav-phone-text">{site.phone}</span>
+          <span class="nav-phone-icon"><Icon name="phone" /></span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="icon-open"><Icon name="menu" /></span>
+          <span class="icon-close"><Icon name="close" /></span>
+        </button>
+      </nav>
+
+      <nav class="mobile-menu" id="mobile-menu" hidden>
+        {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="/projects">Projects</a>
+        <a href="/start">Start a project</a>
+      </nav>
+    </>
   )}
 </header>
+
+<script>
+  const toggle = document.querySelector(".nav-toggle");
+  const menu = document.getElementById("mobile-menu");
+
+  if (toggle && menu) {
+    const setOpen = (open) => {
+      menu.hidden = !open;
+      toggle.setAttribute("aria-expanded", String(open));
+      document.body.classList.toggle("menu-open", open);
+    };
+
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setOpen(menu.hidden);
+    });
+
+    // Tap anywhere else, or hit Escape, to close.
+    document.addEventListener("click", (e) => {
+      if (!menu.hidden && !menu.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.hidden) setOpen(false);
+    });
+
+    // Never leave it open if the window grows back to desktop.
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 860 && !menu.hidden) setOpen(false);
+    });
+  }
+</script>

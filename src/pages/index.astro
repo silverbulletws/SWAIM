@@ -45,7 +45,11 @@ const creds = [
     <div class="hero-scrim"></div>
 
     <div class="hero-inner">
-      <p class="eyebrow">Bowie, Texas &nbsp;·&nbsp; 33.5590&deg; N, 97.8486&deg; W</p>
+      <p class="eyebrow">
+        <span class="eyebrow-place">Bowie, Texas</span>
+        <span class="eyebrow-sep">&nbsp;·&nbsp;</span>
+        <span class="eyebrow-coords">33.5590&deg; N, 97.8486&deg; W</span>
+      </p>
       <h1>
         The engineer and the surveyor
       </h1>
@@ -248,6 +252,19 @@ const creds = [
     opacity: 0.88;
   }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2.25rem; }
+
+  /* Mobile: the desktop padding left a dead quarter-screen under the
+     buttons. Shorter hero, tighter padding, and the section below
+     starts sooner. */
+  @media (max-width: 860px) {
+    .hero {
+      /* MOBILE HERO HEIGHT — the dial. Lower = less empty space
+         under the buttons. 70svh means 70% of the phone screen. */
+      min-height: 70svh;
+      padding: clamp(6.5rem, 16vh, 8rem) var(--pad) 2rem;
+    }
+    .thesis { padding-top: 2.5rem; }
+  }
   .hero .btn-primary,
   .hero .btn-ghost { padding: 0.95rem 1.6rem; }
 
